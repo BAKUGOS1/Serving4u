@@ -1,0 +1,71 @@
+{% extends 'basic.html' %}
+{% load static %}
+{% block title %}Donate Books - HopeBridge Education Drive{% endblock %}
+
+{% block body %}
+<!-- Inner Hero Header -->
+<section class="py-5" style="background: var(--grad-hero); color: white; position: relative;">
+    <div class="hero-backdrop-pattern"></div>
+    <div class="container position-relative py-3" style="z-index: 2;">
+        <div class="text-center max-w-2xl mx-auto" style="max-width: 680px; margin: 0 auto;">
+            <span class="hero-pill-badge mb-2"><i class="fas fa-book-reader text-warning"></i> Universal Literacy</span>
+            <h1 class="text-white font-weight-bold display-5 mb-2" style="font-size: clamp(2rem, 3.5vw, 2.75rem);">
+                Donate <span>Books & Learning Kits</span>
+            </h1>
+            <p class="text-slate-200 lead mb-0" style="font-size: 1.05rem;">
+                Empower children and rural students by donating academic textbooks, literature, and storybooks.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 bg-light">
+    <div class="container py-3">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-md-10">
+                <div class="form-modern-card p-4 p-md-5">
+                    <form action="/donatebooksubmit" method="post" id="donateBooksForm">
+                        {% csrf_token %}
+
+                        <div class="row g-3">
+                            <div class="col-md-6 form-group-modern">
+                                <label class="form-label-modern" for="bookname">Book Title / Subject / Collection <span class="text-danger">*</span></label>
+                                <div class="input-icon-group">
+                                    <i class="fas fa-book input-icon"></i>
+                                    <input type="text" class="form-control-modern" name="bookname" id="bookname" placeholder="e.g., Mathematics Grade 5-10, Children's Storybooks" required>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 form-group-modern">
+                                <label class="form-label-modern" for="quan">Quantity / Number of Books <span class="text-danger">*</span></label>
+                                <div class="input-icon-group">
+                                    <i class="fas fa-layer-group input-icon"></i>
+                                    <input type="text" class="form-control-modern" name="quan" id="quan" placeholder="e.g., 20 books" required>
+                                </div>
+                            </div>
+
+                            <div class="col-12 form-group-modern">
+                                <label class="form-label-modern" for="bookdesc">Description (Language, Grade Level, Condition) <span class="text-danger">*</span></label>
+                                <textarea class="form-control-modern" name="bookdesc" id="bookdesc" rows="3" placeholder="e.g., English & Hindi storybooks in excellent condition for elementary school students." required></textarea>
+                            </div>
+
+                            <div class="col-12 form-group-modern">
+                                <label class="form-label-modern" for="ngoid">Select Partner NGO / School Library <span class="text-danger">*</span></label>
+                                <select class="form-select-modern" id="ngoid" name="ngoid" required>
+                                    {% for n in fetchngo %}
+                                        <option value="{{ n.id }}">{{ n.login_id.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn-modern btn-modern-primary btn-modern-lg w-100 mt-4">
+                            <i class="fas fa-check-circle mr-2"></i> Register Books Donation
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

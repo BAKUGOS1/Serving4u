@@ -1,0 +1,85 @@
+{% extends 'basic.html' %}
+{% load static %}
+{% block title %}Donate Clothes - HopeBridge Warmth Drive{% endblock %}
+
+{% block body %}
+<!-- Inner Hero Header -->
+<section class="py-5" style="background: var(--grad-hero); color: white; position: relative;">
+    <div class="hero-backdrop-pattern"></div>
+    <div class="container position-relative py-3" style="z-index: 2;">
+        <div class="text-center max-w-2xl mx-auto" style="max-width: 680px; margin: 0 auto;">
+            <span class="hero-pill-badge mb-2"><i class="fas fa-tshirt text-warning"></i> Dignity & Warmth Drive</span>
+            <h1 class="text-white font-weight-bold display-5 mb-2" style="font-size: clamp(2rem, 3.5vw, 2.75rem);">
+                Donate <span>Wearable Clothes</span>
+            </h1>
+            <p class="text-slate-200 lead mb-0" style="font-size: 1.05rem;">
+                Give pre-loved, clean garments and winter wear to bring comfort and dignity to families in need.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 bg-light">
+    <div class="container py-3">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-md-10">
+                <div class="form-modern-card p-4 p-md-5">
+                    <form action="/donateclothessubmit" method="post" id="donateClothesForm">
+                        {% csrf_token %}
+
+                        <div class="row g-3">
+                            <div class="col-md-6 form-group-modern">
+                                <label class="form-label-modern" for="agegroup">Target Age Group <span class="text-danger">*</span></label>
+                                <div class="input-icon-group">
+                                    <i class="fas fa-users input-icon"></i>
+                                    <input type="text" class="form-control-modern" name="agegroup" id="agegroup" placeholder="e.g., Children (4-8 yrs), Adults" required>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 form-group-modern">
+                                <label class="form-label-modern" for="pairs">Total Number of Pairs / Items <span class="text-danger">*</span></label>
+                                <div class="input-icon-group">
+                                    <i class="fas fa-layer-group input-icon"></i>
+                                    <input type="text" class="form-control-modern" name="pairs" id="pairs" placeholder="e.g., 15 pairs" required>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 form-group-modern">
+                                <label class="form-label-modern" for="gender">Suitable Gender Category <span class="text-danger">*</span></label>
+                                <select class="form-select-modern" id="gender" name="gender" required>
+                                    <option value="">Select Category</option>
+                                    <option value="Both">Both (Unisex)</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-6 form-group-modern">
+                                <label class="form-label-modern" for="ngoid">Select Beneficiary NGO <span class="text-danger">*</span></label>
+                                <select class="form-select-modern" id="ngoid" name="ngoid" required>
+                                    {% for n in fetchngo %}
+                                        <option value="{{ n.id }}">{{ n.login_id.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="p-3 rounded-xl bg-light border mt-3">
+                            <div class="d-flex align-items-center gap-2 text-primary font-weight-bold small mb-1">
+                                <i class="fas fa-info-circle"></i> Quality Notice:
+                            </div>
+                            <div class="text-muted small">
+                                Please ensure all donated clothes are freshly washed, unstained, and free of major tears.
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn-modern btn-modern-primary btn-modern-lg w-100 mt-4">
+                            <i class="fas fa-check-circle mr-2"></i> Register Clothes Donation
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,205 @@
+{% extends 'basic.html' %}
+{% load static %}
+{% block title %}{{ user.name }} - NGO Dashboard | HopeBridge{% endblock %}
+
+{% block body %}
+<!-- NGO Dashboard Header -->
+<section class="py-5" style="background: var(--grad-hero); color: white; position: relative;">
+    <div class="hero-backdrop-pattern"></div>
+    <div class="container position-relative py-3" style="z-index: 2;">
+        <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
+            <div class="d-flex align-items-center gap-3">
+                <div style="width: 76px; height: 76px; border-radius: var(--radius-2xl); overflow: hidden; border: 3px solid rgba(255, 255, 255, 0.3); background: white;">
+                    {% if profiledata.display_pic %}
+                        <img src="/media/{{ profiledata.display_pic }}" alt="{{ user.name }}" style="width: 100%; height: 100%; object-fit: cover;">
+                    {% else %}
+                        <div class="w-100 h-100 bg-light d-flex align-items-center justify-content-center text-muted">
+                            <i class="fas fa-building fa-2x"></i>
+                        </div>
+                    {% endif %}
+                </div>
+                <div>
+                    <div class="d-flex align-items-center gap-2 mb-1">
+                        <h1 class="text-white font-weight-bold display-6 mb-0" style="font-size: 1.85rem;">{{ user.name }}</h1>
+                        <span class="role-tag-badge role-tag-ngo">Approved NGO</span>
+                    </div>
+                    <div class="text-slate-300 small">
+                        <i class="fas fa-phone-alt mr-1 text-success"></i> {{ profiledata.ngo_helpline|default:user.phone_no }} &bull; 
+                        <i class="fas fa-map-marker-alt mr-1 text-danger"></i> {{ profiledata.address|default:"Location on file" }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex flex-wrap gap-2">
+                <a href="/editprofilengo" class="btn-modern btn-modern-outline-white btn-modern-sm">
+                    <i class="fas fa-edit mr-1"></i> Edit Profile
+                </a>
+                <button type="button" class="btn-modern btn-modern-outline-white btn-modern-sm" data-toggle="modal" data-target="#editDpModal">
+                    <i class="fas fa-image mr-1"></i> Update Logo
+                </button>
+                <button type="button" class="btn-modern btn-modern-outline-white btn-modern-sm" data-toggle="modal" data-target="#passwordModal">
+                    <i class="fas fa-key mr-1"></i> Password
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Dashboard Workspace -->
+<section class="py-5 bg-light">
+    <div class="container py-3">
+        <!-- Event & Volunteer Controls -->
+        <h4 class="font-weight-bold text-dark mb-3">Event & Volunteer Coordination</h4>
+        <div class="row g-3 mb-5">
+            <div class="col-lg-3 col-sm-6">
+                <a href="/addevent" class="modern-card p-3 h-100 text-dark">
+                    <div class="stat-icon-wrapper mb-2" style="background: var(--primary-100); color: var(--primary-700);">
+                        <i class="fas fa-calendar-plus"></i>
+                    </div>
+                    <div class="font-weight-bold">Host New Event</div>
+                    <div class="text-muted small">Schedule charity drives & recruit</div>
+                </a>
+            </div>
+
+            <div class="col-lg-3 col-sm-6">
+                <a href="/manageevent" class="modern-card p-3 h-100 text-dark">
+                    <div class="stat-icon-wrapper mb-2" style="background: var(--accent-blue-light); color: var(--accent-blue);">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    <div class="font-weight-bold">Manage Events</div>
+                    <div class="text-muted small">Edit schedules & volunteer quotas</div>
+                </a>
+            </div>
+
+            <div class="col-lg-3 col-sm-6">
+                <a href="/reqcan" class="modern-card p-3 h-100 text-dark">
+                    <div class="stat-icon-wrapper mb-2" style="background: var(--accent-amber-light); color: var(--accent-amber);">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <div class="font-weight-bold">Request Volunteers</div>
+                    <div class="text-muted small">Specify required volunteer roles</div>
+                </a>
+            </div>
+
+            <div class="col-lg-3 col-sm-6">
+                <a href="/viewcan" class="modern-card p-3 h-100 text-dark">
+                    <div class="stat-icon-wrapper mb-2" style="background: var(--accent-purple-light); color: var(--accent-purple);">
+                        <i class="fas fa-user-check"></i>
+                    </div>
+                    <div class="font-weight-bold">Review Candidates</div>
+                    <div class="text-muted small">Approve or reject applications</div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Incoming Donations Hub -->
+        <h4 class="font-weight-bold text-dark mb-3">Received Donations Ledgers</h4>
+        <div class="row g-3 mb-5">
+            <div class="col-lg-3 col-sm-6">
+                <a href="/receivedmoney" class="modern-card p-3 h-100 text-dark" style="border-left: 4px solid var(--primary-500);">
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                        <span class="font-weight-bold">Funds Received</span>
+                        <i class="fas fa-wallet text-success"></i>
+                    </div>
+                    <div class="text-muted small">Inspect online & direct financial aid</div>
+                </a>
+            </div>
+
+            <div class="col-lg-3 col-sm-6">
+                <a href="/receivedfood" class="modern-card p-3 h-100 text-dark" style="border-left: 4px solid var(--accent-amber);">
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                        <span class="font-weight-bold">Food Received</span>
+                        <i class="fas fa-bread-slice text-warning"></i>
+                    </div>
+                    <div class="text-muted small">Track meal rescue & distribution</div>
+                </a>
+            </div>
+
+            <div class="col-lg-3 col-sm-6">
+                <a href="/receivedclothes" class="modern-card p-3 h-100 text-dark" style="border-left: 4px solid var(--accent-blue);">
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                        <span class="font-weight-bold">Clothes Received</span>
+                        <i class="fas fa-tshirt text-primary"></i>
+                    </div>
+                    <div class="text-muted small">Inspect clothing drop-offs</div>
+                </a>
+            </div>
+
+            <div class="col-lg-3 col-sm-6">
+                <a href="/receivedbooks" class="modern-card p-3 h-100 text-dark" style="border-left: 4px solid var(--accent-purple);">
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                        <span class="font-weight-bold">Books Received</span>
+                        <i class="fas fa-book text-purple"></i>
+                    </div>
+                    <div class="text-muted small">Inspect educational book drives</div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Organization Mission & Profile Overview -->
+        <div class="modern-card p-4 p-md-5">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="font-weight-bold text-dark mb-0">Public Mission Statement</h5>
+                <a href="/editprofilengo" class="btn-modern btn-modern-outline btn-modern-sm">
+                    <i class="fas fa-edit mr-1"></i> Edit Description
+                </a>
+            </div>
+            <p class="text-muted" style="font-size: 1.05rem; line-height: 1.8;">
+                {{ profiledata.ngo_desc|default:"No mission statement provided yet. Click 'Edit Profile' to add your organization's mission and outreach goals." }}
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Change Password Modal -->
+<div class="modal fade" id="passwordModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content rounded-2xl border-0 shadow-2xl overflow-hidden">
+            <div class="modal-header border-0 pb-0">
+                <h5 class="modal-title font-weight-bold text-dark">Update Password</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body p-4">
+                <form action="/changepw" method="post">
+                    {% csrf_token %}
+                    <div class="form-group-modern">
+                        <label class="form-label-modern" for="oldpassword">Current Password</label>
+                        <input type="password" class="form-control-modern" name="oldpassword" id="oldpassword" required>
+                    </div>
+                    <div class="form-group-modern">
+                        <label class="form-label-modern" for="password">New Password</label>
+                        <input type="password" class="form-control-modern" name="password" id="password" required>
+                    </div>
+                    <button type="submit" class="btn-modern btn-modern-primary w-100 mt-2">Save Password</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Update Profile Picture Modal -->
+<div class="modal fade" id="editDpModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content rounded-2xl border-0 shadow-2xl overflow-hidden">
+            <div class="modal-header border-0 pb-0">
+                <h5 class="modal-title font-weight-bold text-dark">Update NGO Logo / Picture</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body p-4">
+                <form action="/changedp" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-group-modern">
+                        <label class="form-label-modern" for="dp">Upload New Logo/Photo</label>
+                        <input type="file" class="form-control-modern" name="dp" id="dp" accept="image/*" required>
+                    </div>
+                    <button type="submit" class="btn-modern btn-modern-primary w-100 mt-2">Upload Photo</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

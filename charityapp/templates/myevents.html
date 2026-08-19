@@ -1,0 +1,96 @@
+{% extends 'basic.html' %}
+{% load static %}
+{% block title %}Manage NGO Events - HopeBridge{% endblock %}
+
+{% block body %}
+<!-- Inner Hero Header -->
+<section class="py-5" style="background: var(--grad-hero); color: white; position: relative;">
+    <div class="hero-backdrop-pattern"></div>
+    <div class="container position-relative py-3" style="z-index: 2;">
+        <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
+            <div>
+                <span class="hero-pill-badge mb-2"><i class="fas fa-tasks text-warning"></i> Event Management</span>
+                <h1 class="text-white font-weight-bold display-5 mb-0" style="font-size: clamp(2rem, 3.5vw, 2.5rem);">
+                    My Scheduled Events
+                </h1>
+            </div>
+            <div class="d-flex gap-2">
+                <a href="/addevent" class="btn-modern btn-modern-accent">
+                    <i class="fas fa-plus-circle mr-1"></i> Host New Event
+                </a>
+                <a href="/ngoprofile" class="btn-modern btn-modern-outline-white">
+                    <i class="fas fa-arrow-left mr-1"></i> Dashboard
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 bg-light">
+    <div class="container py-3">
+        <div class="row g-4">
+            {% if myevents %}
+                {% for me in myevents %}
+                <div class="col-lg-4 col-md-6">
+                    <div class="modern-card h-100 p-0">
+                        <div class="card-media-wrapper" style="padding-top: 55%;">
+                            {% if me.event_pic %}
+                                <img src="/media/{{ me.event_pic }}" alt="{{ me.event_name }}" class="card-media-img">
+                            {% else %}
+                                <div class="w-100 h-100 bg-light d-flex align-items-center justify-content-center text-muted">
+                                    <i class="fas fa-calendar-alt fa-3x"></i>
+                                </div>
+                            {% endif %}
+                            <div class="card-media-badge">
+                                <span class="badge-modern badge-emerald">
+                                    <i class="fas fa-clock mr-1"></i> {{ me.event_time|default:"Schedule set" }}
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="p-4 d-flex flex-column flex-grow-1">
+                            <div class="d-flex align-items-center gap-2 text-muted small mb-2">
+                                <span><i class="fas fa-calendar-day text-primary"></i> {{ me.event_date }}</span>
+                                <span>&bull;</span>
+                                <span><i class="fas fa-map-marker-alt text-danger"></i> {{ me.event_location }}</span>
+                            </div>
+
+                            <h4 class="font-weight-bold text-dark mb-2">
+                                <a href="/eventsingle/{{ me.id }}" class="text-dark">{{ me.event_name }}</a>
+                            </h4>
+
+                            <p class="text-muted small flex-grow-1" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+                                {{ me.event_desc }}
+                            </p>
+
+                            <div class="d-flex align-items-center justify-content-between pt-3 border-top mt-3">
+                                <span class="badge-modern badge-amber font-weight-bold">
+                                    <i class="fas fa-users mr-1"></i> {{ me.volunteer }} Needed
+                                </span>
+                                <div class="d-flex gap-2">
+                                    <a href="/eventsingle/{{ me.id }}" class="btn-modern btn-modern-outline btn-modern-sm">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    <a href="/deleteevent/{{ me.id }}" class="btn-modern btn-modern-danger btn-modern-sm" onclick="return confirm('Are you sure you want to delete this charity event?');">
+                                        <i class="fas fa-trash-alt mr-1"></i> Delete
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="col-12 text-center py-5">
+                    <div class="p-5 bg-white rounded-2xl shadow-sm max-w-md mx-auto" style="max-width: 500px; margin: 0 auto;">
+                        <i class="fas fa-calendar-plus text-muted fa-3x mb-3"></i>
+                        <h4 class="font-weight-bold text-dark">No Events Created Yet</h4>
+                        <p class="text-muted">Host your first charity drive, medical camp, or distribution event.</p>
+                        <a href="/addevent" class="btn-modern btn-modern-primary btn-modern-sm mt-2">Host an Event</a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

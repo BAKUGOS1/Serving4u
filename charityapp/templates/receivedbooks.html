@@ -1,0 +1,74 @@
+{% extends 'basic.html' %}
+{% load static %}
+{% block title %}Received Book Donations - HopeBridge NGO Ledger{% endblock %}
+
+{% block body %}
+<!-- Inner Hero Header -->
+<section class="py-5" style="background: var(--grad-hero); color: white; position: relative;">
+    <div class="hero-backdrop-pattern"></div>
+    <div class="container position-relative py-3" style="z-index: 2;">
+        <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
+            <div>
+                <span class="hero-pill-badge mb-2"><i class="fas fa-book text-warning"></i> Education Drive Log</span>
+                <h1 class="text-white font-weight-bold display-5 mb-0" style="font-size: clamp(2rem, 3.5vw, 2.5rem);">
+                    Received Book Donations
+                </h1>
+            </div>
+            <a href="/ngoprofile" class="btn-modern btn-modern-outline-white">
+                <i class="fas fa-arrow-left mr-1"></i> Back to Dashboard
+            </a>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 bg-light">
+    <div class="container py-3">
+        <!-- Table -->
+        <div class="table-responsive-modern">
+            <table class="table-modern">
+                <thead>
+                    <tr>
+                        <th style="width: 70px;">#</th>
+                        <th>Book Title / Subject</th>
+                        <th>Quantity</th>
+                        <th>Description & Details</th>
+                        <th>Donor Name</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if ngobooks %}
+                        {% for rb in ngobooks %}
+                        <tr>
+                            <td><span class="font-weight-bold text-muted">{{ forloop.counter }}</span></td>
+                            <td>
+                                <div class="font-weight-bold text-dark">{{ rb.book_name }}</div>
+                            </td>
+                            <td>
+                                <span class="badge-modern badge-purple font-weight-bold">{{ rb.book_quantity }} Books</span>
+                            </td>
+                            <td>
+                                <div class="small text-muted" style="max-width: 350px;">{{ rb.book_desc }}</div>
+                            </td>
+                            <td>
+                                <span class="font-weight-bold text-dark">{{ rb.l_id.name }}</span>
+                            </td>
+                            <td>
+                                <span class="badge-modern badge-emerald"><i class="fas fa-book-open mr-1"></i> Cataloged</span>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="6" class="text-center py-5 text-muted">
+                                <i class="fas fa-book fa-2x mb-2 d-block text-muted"></i>
+                                No book donations recorded yet.
+                            </td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+{% endblock %}

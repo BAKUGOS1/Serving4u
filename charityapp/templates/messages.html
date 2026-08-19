@@ -1,0 +1,48 @@
+{% if messages %}
+<div class="toast-container-modern" id="toastContainer">
+  {% for message in messages %}
+  <div class="toast-item-modern toast-{{ message.tags|default:'info' }}" role="alert">
+    <div class="toast-icon-wrapper">
+      {% if 'success' in message.tags %}
+        <i class="fas fa-check-circle"></i>
+      {% elif 'error' in message.tags or 'danger' in message.tags %}
+        <i class="fas fa-exclamation-circle"></i>
+      {% elif 'warning' in message.tags %}
+        <i class="fas fa-exclamation-triangle"></i>
+      {% else %}
+        <i class="fas fa-info-circle"></i>
+      {% endif %}
+    </div>
+    <div class="toast-content-wrapper">
+      <div class="toast-title">
+        {% if 'success' in message.tags %}Success
+        {% elif 'error' in message.tags or 'danger' in message.tags %}Action Needed
+        {% elif 'warning' in message.tags %}Attention
+        {% else %}Notification
+        {% endif %}
+      </div>
+      <p class="toast-message">{{ message }}</p>
+    </div>
+    <button type="button" class="toast-close-btn" onclick="this.closest('.toast-item-modern').remove();" aria-label="Close">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+  {% endfor %}
+</div>
+
+<script>
+  setTimeout(() => {
+    const container = document.getElementById('toastContainer');
+    if (container) {
+      const toasts = container.querySelectorAll('.toast-item-modern');
+      toasts.forEach((toast, idx) => {
+        setTimeout(() => {
+          toast.style.opacity = '0';
+          toast.style.transform = 'translateX(100%)';
+          setTimeout(() => toast.remove(), 300);
+        }, idx * 200 + 4500);
+      });
+    }
+  }, 100);
+</script>
+{% endif %}

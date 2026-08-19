@@ -1,0 +1,189 @@
+{% extends 'basic.html' %}
+{% load static %}
+{% block title %}{{ user.name }} - Donor Dashboard | HopeBridge{% endblock %}
+
+{% block body %}
+<!-- Dashboard Header -->
+<section class="py-5" style="background: var(--grad-hero); color: white; position: relative;">
+    <div class="hero-backdrop-pattern"></div>
+    <div class="container position-relative py-3" style="z-index: 2;">
+        <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
+            <div class="d-flex align-items-center gap-3">
+                <div class="user-badge-avatar" style="width: 72px; height: 72px; font-size: 2rem; border: 3px solid rgba(255, 255, 255, 0.3);">
+                    <i class="fas fa-user text-white"></i>
+                </div>
+                <div>
+                    <div class="d-flex align-items-center gap-2 mb-1">
+                        <h1 class="text-white font-weight-bold display-6 mb-0" style="font-size: 1.85rem;">{{ user.name }}</h1>
+                        <span class="role-tag-badge role-tag-user">Verified Donor</span>
+                    </div>
+                    <div class="text-slate-300 small">
+                        <i class="fas fa-envelope mr-1"></i> {{ user.email }} &bull; <i class="fas fa-phone mr-1"></i> {{ user.phone_no }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex gap-2">
+                <a href="/editprofile" class="btn-modern btn-modern-outline-white btn-modern-sm">
+                    <i class="fas fa-edit mr-1"></i> Edit Profile
+                </a>
+                <button type="button" class="btn-modern btn-modern-outline-white btn-modern-sm" data-toggle="modal" data-target="#passwordModal">
+                    <i class="fas fa-key mr-1"></i> Change Password
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Dashboard Workspace -->
+<section class="py-5 bg-light">
+    <div class="container py-3">
+        <!-- Quick Action Tiles -->
+        <h4 class="font-weight-bold text-dark mb-3">Quick Giving & Volunteering</h4>
+        <div class="row g-3 mb-5">
+            <div class="col-md-4 col-sm-6">
+                <a href="/donatemoney" class="modern-card p-3 h-100 d-flex flex-row align-items-center gap-3 text-dark">
+                    <div class="stat-icon-wrapper" style="background: var(--primary-100); color: var(--primary-700); width: 48px; height: 48px;">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                    <div>
+                        <div class="font-weight-bold">Donate Funds</div>
+                        <div class="text-muted small">Support causes with financial aid</div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+                <a href="/donatefood" class="modern-card p-3 h-100 d-flex flex-row align-items-center gap-3 text-dark">
+                    <div class="stat-icon-wrapper" style="background: var(--accent-amber-light); color: var(--accent-amber); width: 48px; height: 48px;">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <div>
+                        <div class="font-weight-bold">Donate Food</div>
+                        <div class="text-muted small">Rescue surplus edible meals</div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+                <a href="/donateclothes" class="modern-card p-3 h-100 d-flex flex-row align-items-center gap-3 text-dark">
+                    <div class="stat-icon-wrapper" style="background: var(--accent-blue-light); color: var(--accent-blue); width: 48px; height: 48px;">
+                        <i class="fas fa-tshirt"></i>
+                    </div>
+                    <div>
+                        <div class="font-weight-bold">Donate Clothes</div>
+                        <div class="text-muted small">Seasonal warm wear & garments</div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+                <a href="/donatebooks" class="modern-card p-3 h-100 d-flex flex-row align-items-center gap-3 text-dark">
+                    <div class="stat-icon-wrapper" style="background: var(--accent-purple-light); color: var(--accent-purple); width: 48px; height: 48px;">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div>
+                        <div class="font-weight-bold">Donate Books</div>
+                        <div class="text-muted small">Textbooks & reading material</div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+                <a href="/applyvolunteer" class="modern-card p-3 h-100 d-flex flex-row align-items-center gap-3 text-dark">
+                    <div class="stat-icon-wrapper" style="background: #e0f2fe; color: #0284c7; width: 48px; height: 48px;">
+                        <i class="fas fa-hands-helping"></i>
+                    </div>
+                    <div>
+                        <div class="font-weight-bold">Volunteer in Events</div>
+                        <div class="text-muted small">Join on-ground charity drives</div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+                <a href="/viewmyapplications" class="modern-card p-3 h-100 d-flex flex-row align-items-center gap-3 text-dark">
+                    <div class="stat-icon-wrapper" style="background: #fef2f2; color: #dc2626; width: 48px; height: 48px;">
+                        <i class="fas fa-clipboard-check"></i>
+                    </div>
+                    <div>
+                        <div class="font-weight-bold">My Applications</div>
+                        <div class="text-muted small">Track volunteer drive status</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Account Summary Card -->
+        <div class="modern-card p-4 p-md-5">
+            <h5 class="font-weight-bold text-dark mb-3">Account Details & Contact Information</h5>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <div class="p-3 bg-light rounded-xl">
+                        <div class="text-muted small">Full Legal Name</div>
+                        <div class="font-weight-bold text-dark" style="font-size: 1.1rem;">{{ user.name }}</div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="p-3 bg-light rounded-xl">
+                        <div class="text-muted small">Email Address</div>
+                        <div class="font-weight-bold text-dark" style="font-size: 1.1rem;">{{ user.email }}</div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="p-3 bg-light rounded-xl">
+                        <div class="text-muted small">Contact Phone Number</div>
+                        <div class="font-weight-bold text-dark" style="font-size: 1.1rem;">{{ user.phone_no }}</div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="p-3 bg-light rounded-xl">
+                        <div class="text-muted small">Membership Status</div>
+                        <div class="font-weight-bold text-success" style="font-size: 1.1rem;">
+                            <i class="fas fa-check-circle mr-1"></i> Active Community Member
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Change Password Modal -->
+<div class="modal fade" id="passwordModal" tabindex="-1" role="dialog" aria-labelledby="passwordModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content rounded-2xl border-0 shadow-2xl overflow-hidden">
+            <div class="modal-header border-0 pb-0">
+                <h5 class="modal-title font-weight-bold text-dark" id="passwordModalTitle">Change Account Password</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body p-4">
+                <form action="/changepw" method="post">
+                    {% csrf_token %}
+                    <div class="form-group-modern">
+                        <label class="form-label-modern" for="oldpassword">Current Password <span class="text-danger">*</span></label>
+                        <div class="input-icon-group">
+                            <i class="fas fa-lock input-icon"></i>
+                            <input type="password" class="form-control-modern" name="oldpassword" id="oldpassword" placeholder="Enter current password" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group-modern">
+                        <label class="form-label-modern" for="newpassword">New Password <span class="text-danger">*</span></label>
+                        <div class="input-icon-group">
+                            <i class="fas fa-key input-icon"></i>
+                            <input type="password" class="form-control-modern" name="password" id="newpassword" placeholder="Enter new secure password" required>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-modern btn-modern-primary w-100 mt-3">
+                        <i class="fas fa-shield-alt mr-2"></i> Update Password
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

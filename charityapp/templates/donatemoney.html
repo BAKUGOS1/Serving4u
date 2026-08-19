@@ -1,0 +1,185 @@
+{% extends 'basic.html' %}
+{% load static %}
+{% block title %}Donate Financial Aid - HopeBridge{% endblock %}
+
+{% block body %}
+<!-- Inner Hero Header -->
+<section class="py-5" style="background: var(--grad-hero); color: white; position: relative;">
+    <div class="hero-backdrop-pattern"></div>
+    <div class="container position-relative py-3" style="z-index: 2;">
+        <div class="text-center max-w-2xl mx-auto" style="max-width: 680px; margin: 0 auto;">
+            <span class="hero-pill-badge mb-2"><i class="fas fa-hand-holding-usd text-warning"></i> Direct Financial Aid</span>
+            <h1 class="text-white font-weight-bold display-5 mb-2" style="font-size: clamp(2rem, 3.5vw, 2.75rem);">
+                Make a <span>Monetary Donation</span>
+            </h1>
+            <p class="text-slate-200 lead mb-0" style="font-size: 1.05rem;">
+                Your funds directly power emergency medical camps, shelter supplies, and daily food distribution.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 bg-light">
+    <div class="container py-3">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-md-10">
+                <div class="form-modern-card p-4 p-md-5">
+                    <form action="/donatemoneysubmit" method="post" id="donateMoneyForm">
+                        {% csrf_token %}
+
+                        <!-- Amount Selector -->
+                        <div class="form-group-modern mb-4">
+                            <label class="form-label-modern mb-2">Select Donation Amount ($ USD / INR) <span class="text-danger">*</span></label>
+                            
+                            <div class="d-flex flex-wrap gap-2 mb-3">
+                                <button type="button" class="btn-modern btn-modern-outline btn-modern-sm amount-chip" onclick="setAmount(10)">$10</button>
+                                <button type="button" class="btn-modern btn-modern-outline btn-modern-sm amount-chip" onclick="setAmount(25)">$25</button>
+                                <button type="button" class="btn-modern btn-modern-outline btn-modern-sm amount-chip active" onclick="setAmount(50)">$50</button>
+                                <button type="button" class="btn-modern btn-modern-outline btn-modern-sm amount-chip" onclick="setAmount(100)">$100</button>
+                                <button type="button" class="btn-modern btn-modern-outline btn-modern-sm amount-chip" onclick="setAmount(250)">$250</button>
+                                <button type="button" class="btn-modern btn-modern-outline btn-modern-sm amount-chip" onclick="setAmount(500)">$500</button>
+                            </div>
+
+                            <div class="input-icon-group">
+                                <i class="fas fa-dollar-sign input-icon"></i>
+                                <input type="number" class="form-control-modern" name="amount" id="amountInput" value="50" min="1" placeholder="Custom Amount" required>
+                            </div>
+                        </div>
+
+                        <!-- Target NGO Selector -->
+                        <div class="form-group-modern mb-4">
+                            <label class="form-label-modern" for="ngoid">Choose Beneficiary NGO Partner <span class="text-danger">*</span></label>
+                            <div class="input-icon-group">
+                                <i class="fas fa-building input-icon"></i>
+                                <select class="form-select-modern" style="padding-left: 2.75rem;" id="ngoid" name="ngoid" required>
+                                    {% for n in fetchngo %}
+                                        <option value="{{ n.id }}">{{ n.login_id.name }} ({{ n.address|default:"Verified" }})</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Payment Method Toggle -->
+                        <div class="form-group-modern mb-4">
+                            <label class="form-label-modern mb-2">Select Payment Method <span class="text-danger">*</span></label>
+                            <div class="row g-2">
+                                <div class="col-6">
+                                    <label class="d-block p-3 rounded-xl border text-center cursor-pointer" id="payCardLabel" style="cursor: pointer; border-width: 2px !important; border-color: var(--primary-500); background: var(--primary-50);">
+                                        <input type="radio" name="paymentMethod" id="payCard" value="card" checked style="display: none;">
+                                        <i class="fas fa-credit-card fa-lg text-primary d-block mb-1"></i>
+                                        <span class="font-weight-bold text-dark small">Credit / Debit Card</span>
+                                    </label>
+                                </div>
+                                <div class="col-6">
+                                    <label class="d-block p-3 rounded-xl border text-center cursor-pointer" id="payOnlineLabel" style="cursor: pointer; border-width: 2px !important; border-color: var(--slate-200); background: white;">
+                                        <input type="radio" name="paymentMethod" id="payOnline" value="online" style="display: none;">
+                                        <i class="fas fa-bolt fa-lg text-warning d-block mb-1"></i>
+                                        <span class="font-weight-bold text-dark small">Razorpay / UPI</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card Payment Fields Container -->
+                        <div id="cardFieldsContainer" class="p-3 rounded-xl border bg-light mb-4">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h6 class="font-weight-bold text-dark mb-0"><i class="fas fa-shield-alt text-success mr-1"></i> Secure Card Terminal</h6>
+                                <button type="button" class="btn-modern btn-modern-outline btn-modern-sm py-1 px-2" style="font-size: 0.75rem;" onclick="fillDemoCard()">
+                                    <i class="fas fa-magic mr-1"></i> Fill Test Card
+                                </button>
+                            </div>
+
+                            <div class="row g-3">
+                                <div class="col-12">
+                                    <label class="form-label-modern small mb-1" for="cardName">Cardholder Name</label>
+                                    <input type="text" class="form-control-modern" name="name" id="cardName" placeholder="Full Name on Card" value="Hope Contributor">
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label-modern small mb-1" for="cardNumber">Card Number</label>
+                                    <input type="text" class="form-control-modern" name="number" id="cardNumber" placeholder="4242 4242 4242 4242" value="4242424242424242">
+                                </div>
+                                <div class="col-6">
+                                    <label class="form-label-modern small mb-1" for="cardExpiry">Expiry (MM/YY)</label>
+                                    <input type="text" class="form-control-modern" name="expiration-month-and-year" id="cardExpiry" placeholder="01/25" value="01/25">
+                                </div>
+                                <div class="col-6">
+                                    <label class="form-label-modern small mb-1" for="cardCvv">CVV Code</label>
+                                    <input type="password" class="form-control-modern" name="security-code" id="cardCvv" placeholder="123" value="123">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Online / Razorpay Container -->
+                        <div id="onlineFieldsContainer" class="p-3 rounded-xl border bg-light mb-4 text-center" style="display: none;">
+                            <i class="fas fa-university fa-2x text-primary mb-2"></i>
+                            <h6 class="font-weight-bold text-dark mb-1">Razorpay Online Gateway</h6>
+                            <p class="text-muted small mb-0">You will be redirected to complete payment securely via UPI, NetBanking, or Wallet.</p>
+                        </div>
+
+                        <button type="submit" class="btn-modern btn-modern-primary btn-modern-lg w-100">
+                            <i class="fas fa-lock mr-2"></i> Confirm & Complete Donation
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    const payCardRadio = document.getElementById('payCard');
+    const payOnlineRadio = document.getElementById('payOnline');
+    const payCardLabel = document.getElementById('payCardLabel');
+    const payOnlineLabel = document.getElementById('payOnlineLabel');
+    const cardFields = document.getElementById('cardFieldsContainer');
+    const onlineFields = document.getElementById('onlineFieldsContainer');
+
+    function updatePayMethod() {
+        if (payCardRadio.checked) {
+            payCardLabel.style.borderColor = 'var(--primary-500)';
+            payCardLabel.style.background = 'var(--primary-50)';
+            payOnlineLabel.style.borderColor = 'var(--slate-200)';
+            payOnlineLabel.style.background = 'white';
+            cardFields.style.display = 'block';
+            onlineFields.style.display = 'none';
+        } else {
+            payOnlineLabel.style.borderColor = 'var(--primary-500)';
+            payOnlineLabel.style.background = 'var(--primary-50)';
+            payCardLabel.style.borderColor = 'var(--slate-200)';
+            payCardLabel.style.background = 'white';
+            cardFields.style.display = 'none';
+            onlineFields.style.display = 'block';
+        }
+    }
+
+    payCardLabel.addEventListener('click', () => {
+        payCardRadio.checked = true;
+        updatePayMethod();
+    });
+
+    payOnlineLabel.addEventListener('click', () => {
+        payOnlineRadio.checked = true;
+        updatePayMethod();
+    });
+
+    function setAmount(val) {
+        document.getElementById('amountInput').value = val;
+        document.querySelectorAll('.amount-chip').forEach(btn => {
+            if (btn.innerText.includes(val)) {
+                btn.classList.add('active', 'btn-modern-primary');
+                btn.classList.remove('btn-modern-outline');
+            } else {
+                btn.classList.remove('active', 'btn-modern-primary');
+                btn.classList.add('btn-modern-outline');
+            }
+        });
+    }
+
+    function fillDemoCard() {
+        document.getElementById('cardNumber').value = '4242424242424242';
+        document.getElementById('cardExpiry').value = '01/25';
+        document.getElementById('cardCvv').value = '123';
+        document.getElementById('cardName').value = 'Verified Donor';
+    }
+</script>
+{% endblock %}

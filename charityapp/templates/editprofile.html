@@ -1,0 +1,58 @@
+{% extends 'basic.html' %}
+{% load static %}
+{% block title %}Edit Profile - HopeBridge{% endblock %}
+
+{% block body %}
+<!-- Inner Hero Header -->
+<section class="py-5" style="background: var(--grad-hero); color: white; position: relative;">
+    <div class="hero-backdrop-pattern"></div>
+    <div class="container position-relative py-3" style="z-index: 2;">
+        <div class="d-flex align-items-center justify-content-between">
+            <div>
+                <span class="hero-pill-badge mb-2"><i class="fas fa-user-edit text-warning"></i> Account Settings</span>
+                <h1 class="text-white font-weight-bold display-5 mb-0" style="font-size: clamp(2rem, 3.5vw, 2.5rem);">
+                    Edit Personal Details
+                </h1>
+            </div>
+            <a href="/profile" class="btn-modern btn-modern-outline-white">
+                <i class="fas fa-arrow-left mr-1"></i> Back to Dashboard
+            </a>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 bg-light">
+    <div class="container py-3">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-8">
+                <div class="form-modern-card p-4 p-md-5">
+                    <h4 class="font-weight-bold text-dark mb-4">Update Contact Information</h4>
+                    
+                    <form action="/datasaveuser" method="post" id="editProfileForm">
+                        {% csrf_token %}
+                        <div class="form-group-modern">
+                            <label class="form-label-modern" for="name">Full Name <span class="text-danger">*</span></label>
+                            <div class="input-icon-group">
+                                <i class="fas fa-user input-icon"></i>
+                                <input type="text" class="form-control-modern" name="name" id="name" value="{{ user.name }}" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group-modern">
+                            <label class="form-label-modern" for="phone">Phone Number <span class="text-danger">*</span></label>
+                            <div class="input-icon-group">
+                                <i class="fas fa-phone-alt input-icon"></i>
+                                <input type="tel" class="form-control-modern" name="phone" id="phone" value="{{ user.phone_no }}" required>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn-modern btn-modern-primary btn-modern-lg w-100 mt-3">
+                            <i class="fas fa-save mr-2"></i> Save Changes
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

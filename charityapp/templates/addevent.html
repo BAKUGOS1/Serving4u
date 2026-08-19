@@ -1,0 +1,92 @@
+{% extends 'basic.html' %}
+{% load static %}
+{% block title %}Create Charity Event - HopeBridge{% endblock %}
+
+{% block body %}
+<!-- Inner Hero Header -->
+<section class="py-5" style="background: var(--grad-hero); color: white; position: relative;">
+    <div class="hero-backdrop-pattern"></div>
+    <div class="container position-relative py-3" style="z-index: 2;">
+        <div class="d-flex align-items-center justify-content-between">
+            <div>
+                <span class="hero-pill-badge mb-2"><i class="fas fa-calendar-plus text-warning"></i> NGO Studio</span>
+                <h1 class="text-white font-weight-bold display-5 mb-0" style="font-size: clamp(2rem, 3.5vw, 2.5rem);">
+                    Create Social Event & Drive
+                </h1>
+            </div>
+            <a href="/manageevent" class="btn-modern btn-modern-outline-white">
+                <i class="fas fa-tasks mr-1"></i> Manage My Events
+            </a>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 bg-light">
+    <div class="container py-3">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-md-10">
+                <div class="form-modern-card p-4 p-md-5">
+                    <form action="/addeventsubmit" method="post" id="addEventForm" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                        <div class="row g-3">
+                            <div class="col-12 form-group-modern">
+                                <label class="form-label-modern" for="name">Event / Drive Title <span class="text-danger">*</span></label>
+                                <div class="input-icon-group">
+                                    <i class="fas fa-calendar-day input-icon"></i>
+                                    <input type="text" class="form-control-modern" name="name" id="name" placeholder="e.g., Winter Blanket Drive & Medical Camp" required>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 form-group-modern">
+                                <label class="form-label-modern" for="date">Event Date <span class="text-danger">*</span></label>
+                                <input type="date" class="form-control-modern" name="date" id="date" required>
+                            </div>
+
+                            <div class="col-md-6 form-group-modern">
+                                <label class="form-label-modern" for="time">Reporting / Start Time <span class="text-danger">*</span></label>
+                                <input type="time" class="form-control-modern" name="time" id="time" required>
+                            </div>
+
+                            <div class="col-md-6 form-group-modern">
+                                <label class="form-label-modern" for="location">Venue / Location Address <span class="text-danger">*</span></label>
+                                <div class="input-icon-group">
+                                    <i class="fas fa-map-marker-alt input-icon"></i>
+                                    <input type="text" class="form-control-modern" name="location" id="location" placeholder="City Community Center, Ahmedabad" required>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 form-group-modern">
+                                <label class="form-label-modern" for="volunteer">Volunteers Required Quota <span class="text-danger">*</span></label>
+                                <div class="input-icon-group">
+                                    <i class="fas fa-users input-icon"></i>
+                                    <input type="number" class="form-control-modern" name="volunteer" id="volunteer" value="10" min="0" required>
+                                </div>
+                            </div>
+
+                            <div class="col-12 form-group-modern">
+                                <label class="form-label-modern" for="description">Event Scope & Volunteer Activities <span class="text-danger">*</span></label>
+                                <textarea class="form-control-modern" name="description" id="description" rows="4" placeholder="Detail the drive's goals, volunteer tasks (packaging, distribution, crowd control), and benefits..." required></textarea>
+                            </div>
+
+                            <div class="col-12 form-group-modern">
+                                <label class="form-label-modern" for="dp">Event Banner / Promotional Picture <span class="text-danger">*</span></label>
+                                <div class="file-dropzone-modern">
+                                    <i class="fas fa-image dropzone-icon"></i>
+                                    <div class="font-weight-bold text-dark mb-1">Click to Upload Event Banner Photo</div>
+                                    <div class="text-muted small">High-resolution JPG or PNG recommended</div>
+                                    <input type="file" class="dropzone-input" name="dp" id="dp" accept="image/*" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn-modern btn-modern-primary btn-modern-lg w-100 mt-4">
+                            <i class="fas fa-plus-circle mr-2"></i> Publish Event to Community
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

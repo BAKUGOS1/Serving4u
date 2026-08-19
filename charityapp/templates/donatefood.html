@@ -1,0 +1,100 @@
+{% extends 'basic.html' %}
+{% load static %}
+{% block title %}Donate Food - HopeBridge Food Rescue{% endblock %}
+
+{% block body %}
+<!-- Inner Hero Header -->
+<section class="py-5" style="background: var(--grad-hero); color: white; position: relative;">
+    <div class="hero-backdrop-pattern"></div>
+    <div class="container position-relative py-3" style="z-index: 2;">
+        <div class="text-center max-w-2xl mx-auto" style="max-width: 680px; margin: 0 auto;">
+            <span class="hero-pill-badge mb-2"><i class="fas fa-utensils text-warning"></i> Zero-Hunger Initiative</span>
+            <h1 class="text-white font-weight-bold display-5 mb-2" style="font-size: clamp(2rem, 3.5vw, 2.75rem);">
+                Rescue & <span>Donate Food</span>
+            </h1>
+            <p class="text-slate-200 lead mb-0" style="font-size: 1.05rem;">
+                Help us divert surplus cooked meals and packaged rations to local shelters and community kitchens.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 bg-light">
+    <div class="container py-3">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-md-10">
+                <div class="form-modern-card p-4 p-md-5">
+                    <form action="/donatefoodsubmit" method="post" id="donateFoodForm" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                        <div class="row g-3">
+                            <div class="col-md-6 form-group-modern">
+                                <label class="form-label-modern" for="foodname">Meal / Food Description <span class="text-danger">*</span></label>
+                                <div class="input-icon-group">
+                                    <i class="fas fa-bread-slice input-icon"></i>
+                                    <input type="text" class="form-control-modern" name="foodname" id="foodname" placeholder="e.g., Cooked Rice & Dal, Veg Biryani" required>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 form-group-modern">
+                                <label class="form-label-modern" for="foodweight">Total Quantity (Kg / Servings) <span class="text-danger">*</span></label>
+                                <div class="input-icon-group">
+                                    <i class="fas fa-weight-hanging input-icon"></i>
+                                    <input type="text" class="form-control-modern" name="foodweight" id="foodweight" placeholder="e.g., 25 kg (Approx 50 meals)" required>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 form-group-modern">
+                                <label class="form-label-modern" for="makingdatetime">Prepared Timestamp <span class="text-danger">*</span></label>
+                                <input type="datetime-local" class="form-control-modern" name="makingdatetime" id="makingdatetime" required>
+                            </div>
+
+                            <div class="col-md-6 form-group-modern">
+                                <label class="form-label-modern" for="expdatetime">Estimated Expiry Timestamp <span class="text-danger">*</span></label>
+                                <input type="datetime-local" class="form-control-modern" name="expdatetime" id="expdatetime" required>
+                            </div>
+
+                            <div class="col-md-6 form-group-modern">
+                                <label class="form-label-modern" for="donationdate">Scheduled Handover Date <span class="text-danger">*</span></label>
+                                <input type="date" class="form-control-modern" name="donationdate" id="donationdate" required>
+                            </div>
+
+                            <div class="col-md-6 form-group-modern">
+                                <label class="form-label-modern" for="ngoid">Select Partner NGO <span class="text-danger">*</span></label>
+                                <select class="form-select-modern" id="ngoid" name="ngoid" required>
+                                    {% for n in fetchngo %}
+                                        <option value="{{ n.id }}">{{ n.login_id.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="col-12 form-group-modern">
+                                <label class="form-label-modern" for="foodsample">Sample Food Photograph <span class="text-danger">*</span></label>
+                                <div class="file-dropzone-modern">
+                                    <i class="fas fa-camera dropzone-icon"></i>
+                                    <div class="font-weight-bold text-dark mb-1">Upload Food Condition Snapshot</div>
+                                    <div class="text-muted small">JPG, PNG, or WEBP</div>
+                                    <input type="file" class="dropzone-input" name="foodsample" id="foodsample" accept="image/*" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-3 rounded-xl bg-light border mt-3">
+                            <div class="d-flex align-items-center gap-2 text-success font-weight-bold small mb-1">
+                                <i class="fas fa-shield-alt"></i> Food Safety Standard:
+                            </div>
+                            <div class="text-muted small">
+                                Ensure food has been stored in clean, covered containers and handled under hygienic conditions.
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn-modern btn-modern-primary btn-modern-lg w-100 mt-4">
+                            <i class="fas fa-check-circle mr-2"></i> Submit Food Donation
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

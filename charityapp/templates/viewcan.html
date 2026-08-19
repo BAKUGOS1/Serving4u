@@ -1,0 +1,90 @@
+{% extends 'basic.html' %}
+{% load static %}
+{% block title %}Review Volunteer Candidates - HopeBridge NGO Console{% endblock %}
+
+{% block body %}
+<!-- Inner Hero Header -->
+<section class="py-5" style="background: var(--grad-hero); color: white; position: relative;">
+    <div class="hero-backdrop-pattern"></div>
+    <div class="container position-relative py-3" style="z-index: 2;">
+        <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
+            <div>
+                <span class="hero-pill-badge mb-2"><i class="fas fa-user-check text-warning"></i> Application Review</span>
+                <h1 class="text-white font-weight-bold display-5 mb-0" style="font-size: clamp(2rem, 3.5vw, 2.5rem);">
+                    Review Volunteer Candidates
+                </h1>
+            </div>
+            <a href="/ngoprofile" class="btn-modern btn-modern-outline-white">
+                <i class="fas fa-arrow-left mr-1"></i> Back to Dashboard
+            </a>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 bg-light">
+    <div class="container py-3">
+        <div class="row g-4">
+            {% if appliedcandata %}
+                {% for acd in appliedcandata %}
+                {% if not acd.rejected %}
+                <div class="col-lg-6">
+                    <div class="modern-card p-4 h-100">
+                        <div class="d-flex gap-3 align-items-start">
+                            <div class="user-badge-avatar" style="width: 54px; height: 54px; font-size: 1.5rem; flex-shrink: 0; background: var(--grad-primary);">
+                                <i class="fas fa-user text-white"></i>
+                            </div>
+
+                            <div class="flex-grow-1">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <h5 class="font-weight-bold text-dark mb-1">{{ acd.l_id.name }}</h5>
+                                    {% if not acd.show_interest_button %}
+                                        <span class="badge-modern badge-emerald"><i class="fas fa-check-circle"></i> Approved</span>
+                                    {% else %}
+                                        <span class="badge-modern badge-amber"><i class="fas fa-clock"></i> Pending Review</span>
+                                    {% endif %}
+                                </div>
+
+                                <div class="d-flex flex-column gap-1 text-muted small mb-3">
+                                    <div><i class="fas fa-envelope mr-1 text-primary"></i> {{ acd.l_id.email }}</div>
+                                    <div><i class="fas fa-phone-alt mr-1 text-success"></i> {{ acd.l_id.phone_no }}</div>
+                                </div>
+
+                                <div class="p-3 bg-light rounded-xl mb-3">
+                                    <div class="text-muted small font-weight-bold text-uppercase">Applied For Event</div>
+                                    <div class="font-weight-bold text-dark">{{ acd.event_id.event_name }}</div>
+                                    <div class="text-muted small">
+                                        <i class="fas fa-calendar-day mr-1"></i> {{ acd.event_id.event_date }} &bull; 
+                                        <i class="fas fa-map-marker-alt mr-1"></i> {{ acd.event_id.event_location }}
+                                    </div>
+                                </div>
+
+                                {% if acd.show_interest_button %}
+                                <div class="d-flex gap-2">
+                                    <a href="/acceptcan/{{ acd.id }}" class="btn-modern btn-modern-primary btn-modern-sm flex-grow-1">
+                                        <i class="fas fa-check mr-1"></i> Approve Candidate
+                                    </a>
+                                    <a href="/rejectcan/{{ acd.id }}" class="btn-modern btn-modern-danger btn-modern-sm" onclick="return confirm('Reject this volunteer application?');">
+                                        <i class="fas fa-times mr-1"></i> Reject
+                                    </a>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+            {% else %}
+                <div class="col-12 text-center py-5">
+                    <div class="p-5 bg-white rounded-2xl shadow-sm max-w-md mx-auto" style="max-width: 500px; margin: 0 auto;">
+                        <i class="fas fa-user-friends text-muted fa-3x mb-3"></i>
+                        <h4 class="font-weight-bold text-dark">No Candidate Applications Yet</h4>
+                        <p class="text-muted">When volunteers apply for your scheduled events, their applications will appear here for review.</p>
+                        <a href="/addevent" class="btn-modern btn-modern-primary btn-modern-sm mt-2">Host an Event</a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

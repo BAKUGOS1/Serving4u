@@ -1,0 +1,313 @@
+{% extends 'basic.html' %}
+{% load static %}
+{% block title %}HopeBridge - Uniting Donors, Volunteers & NGOs for Real Impact{% endblock %}
+
+{% block body %}
+<!-- Hero Section -->
+<section class="hero-modern-section">
+    <div class="container position-relative" style="z-index: 2;">
+        <div class="row align-items-center gy-5">
+            <div class="col-lg-6">
+                <div class="hero-pill-badge">
+                    <i class="fas fa-sparkles text-warning"></i> Certified Non-Profit & Volunteer Hub
+                </div>
+                <h1 class="hero-main-title">
+                    Transforming Lives Through <span>Direct Giving</span> & Community Action
+                </h1>
+                <p class="hero-lead-text">
+                    HopeBridge connects compassionate donors, dedicated volunteers, and grassroots NGOs to distribute food, warm clothing, educational books, and urgent financial aid where it is needed most.
+                </p>
+                <div class="hero-action-buttons">
+                    <a href="/donatemoney" class="btn-modern btn-modern-accent btn-modern-lg">
+                        <i class="fas fa-heart mr-2"></i> Donate Now
+                    </a>
+                    <a href="/allngo" class="btn-modern btn-modern-outline-white btn-modern-lg">
+                        <i class="fas fa-search mr-2"></i> Discover NGOs
+                    </a>
+                    <a href="/events" class="btn-modern btn-modern-outline-white btn-modern-lg">
+                        <i class="fas fa-calendar-check mr-2"></i> Volunteer Events
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="glass-card p-2" style="background: rgba(255, 255, 255, 0.12); border-color: rgba(255, 255, 255, 0.25);">
+                    <div style="border-radius: var(--radius-xl); overflow: hidden;">
+                        <img src="{% static 'assets/img/modern/hero_charity_realistic.jpg' %}" alt="Community Volunteers Distribution" class="img-fluid w-100" style="display: block; object-fit: cover; max-height: 400px;">
+                    </div>
+
+                    <!-- Minimal Trust Note Below Image -->
+                    <div class="d-flex align-items-center gap-3 px-3 py-2 mt-2" style="background: rgba(15, 23, 42, 0.65); border-radius: var(--radius-lg); border: 1px solid rgba(255, 255, 255, 0.1);">
+                        <div style="width: 30px; height: 30px; border-radius: 50%; background: var(--primary-500); display: flex; align-items: center; justify-content: center; font-size: 0.85rem; flex-shrink: 0;">
+                            <i class="fas fa-check-double text-white"></i>
+                        </div>
+                        <div style="line-height: 1.35;">
+                            <div style="font-family: var(--font-heading); font-weight: 700; font-size: 0.85rem; color: #ffffff;">100% Transparent & Verified Delivery</div>
+                            <div style="font-size: 0.775rem; color: var(--slate-300);">Every meal, book, and dollar reaches verified causes directly.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Live Impact Telemetry Strip -->
+<div class="container stats-counter-strip">
+    <div class="row g-4">
+        <div class="col-lg-3 col-sm-6">
+            <div class="stat-counter-card">
+                <div class="stat-icon-wrapper" style="background: var(--primary-100); color: var(--primary-700);">
+                    <i class="fas fa-hand-holding-usd"></i>
+                </div>
+                <div>
+                    <div class="stat-val">$180K+</div>
+                    <div class="stat-title">Funds Distributed</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-sm-6">
+            <div class="stat-counter-card">
+                <div class="stat-icon-wrapper" style="background: var(--accent-amber-light); color: var(--accent-amber);">
+                    <i class="fas fa-utensils"></i>
+                </div>
+                <div>
+                    <div class="stat-val">32,500+</div>
+                    <div class="stat-title">Meals Rescued</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-sm-6">
+            <div class="stat-counter-card">
+                <div class="stat-icon-wrapper" style="background: var(--accent-blue-light); color: var(--accent-blue);">
+                    <i class="fas fa-hands-helping"></i>
+                </div>
+                <div>
+                    <div class="stat-val">1,400+</div>
+                    <div class="stat-title">Active Volunteers</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-sm-6">
+            <div class="stat-counter-card">
+                <div class="stat-icon-wrapper" style="background: var(--accent-purple-light); color: var(--accent-purple);">
+                    <i class="fas fa-building"></i>
+                </div>
+                <div>
+                    <div class="stat-val">45+</div>
+                    <div class="stat-title">Verified NGO Partners</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 4 Core Giving Pillars -->
+<section class="py-5 mt-5">
+    <div class="container">
+        <div class="section-header-center">
+            <span class="section-eyebrow">Our Core Pillars</span>
+            <h2 class="section-title">Multiple Ways to Create Immediate Impact</h2>
+            <p class="section-desc">
+                Whether you have financial aid to share, surplus edible meals, wearable clothes, or educational books, HopeBridge connects your donation to those in need.
+            </p>
+        </div>
+
+        <div class="row g-4">
+            <!-- Pillar 1: Money -->
+            <div class="col-lg-3 col-md-6">
+                <div class="modern-card h-100 p-4" style="border-top: 4px solid var(--primary-500);">
+                    <div class="stat-icon-wrapper mb-3" style="background: var(--primary-50); color: var(--primary-600); width: 60px; height: 60px; font-size: 1.75rem;">
+                        <i class="fas fa-donate"></i>
+                    </div>
+                    <h4 class="font-weight-bold mb-2">Financial Aid</h4>
+                    <p class="text-muted small flex-grow-1">
+                        Support healthcare emergency funds, disaster relief shelters, and NGO operational needs with instant, secure donations.
+                    </p>
+                    <a href="/donatemoney" class="btn-modern btn-modern-outline btn-modern-sm mt-3 w-100">
+                        Donate Funds <i class="fas fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Pillar 2: Food -->
+            <div class="col-lg-3 col-md-6">
+                <div class="modern-card h-100 p-4" style="border-top: 4px solid var(--accent-amber);">
+                    <div class="stat-icon-wrapper mb-3" style="background: var(--accent-amber-light); color: var(--accent-amber); width: 60px; height: 60px; font-size: 1.75rem;">
+                        <i class="fas fa-apple-alt"></i>
+                    </div>
+                    <h4 class="font-weight-bold mb-2">Food Rescue</h4>
+                    <p class="text-muted small flex-grow-1">
+                        Donate surplus cooked meals from weddings, restaurants, or households to eliminate hunger in local shelters.
+                    </p>
+                    <a href="/donatefood" class="btn-modern btn-modern-outline btn-modern-sm mt-3 w-100">
+                        Donate Food <i class="fas fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Pillar 3: Clothes -->
+            <div class="col-lg-3 col-md-6">
+                <div class="modern-card h-100 p-4" style="border-top: 4px solid var(--accent-blue);">
+                    <div class="stat-icon-wrapper mb-3" style="background: var(--accent-blue-light); color: var(--accent-blue); width: 60px; height: 60px; font-size: 1.75rem;">
+                        <i class="fas fa-tshirt"></i>
+                    </div>
+                    <h4 class="font-weight-bold mb-2">Warm Clothes</h4>
+                    <p class="text-muted small flex-grow-1">
+                        Pass on wearable winter garments, children's clothes, and daily wear to underprivileged communities facing harsh climates.
+                    </p>
+                    <a href="/donateclothes" class="btn-modern btn-modern-outline btn-modern-sm mt-3 w-100">
+                        Donate Clothes <i class="fas fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Pillar 4: Books -->
+            <div class="col-lg-3 col-md-6">
+                <div class="modern-card h-100 p-4" style="border-top: 4px solid var(--accent-purple);">
+                    <div class="stat-icon-wrapper mb-3" style="background: var(--accent-purple-light); color: var(--accent-purple); width: 60px; height: 60px; font-size: 1.75rem;">
+                        <i class="fas fa-book-reader"></i>
+                    </div>
+                    <h4 class="font-weight-bold mb-2">Books & Learning</h4>
+                    <p class="text-muted small flex-grow-1">
+                        Fuel education by donating academic textbooks, storybooks, and stationery to community libraries and remote schools.
+                    </p>
+                    <a href="/donatebooks" class="btn-modern btn-modern-outline btn-modern-sm mt-3 w-100">
+                        Donate Books <i class="fas fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Social Events Section -->
+<section class="py-5 bg-white" style="border-top: 1px solid var(--slate-200); border-bottom: 1px solid var(--slate-200);">
+    <div class="container">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-4">
+            <div>
+                <span class="section-eyebrow">On-Ground Drives</span>
+                <h2 class="section-title mb-0">Upcoming Volunteer Events</h2>
+            </div>
+            <a href="/events" class="btn-modern btn-modern-outline mt-3 mt-md-0">
+                View All Events <i class="fas fa-arrow-right ml-1"></i>
+            </a>
+        </div>
+
+        <div class="row g-4">
+            {% if allevents %}
+                {% for ve in allevents %}
+                {% if forloop.counter <= 3 %}
+                <div class="col-lg-4 col-md-6">
+                    <div class="modern-card h-100">
+                        <div class="card-media-wrapper">
+                            {% if ve.event_pic %}
+                                <img src="/media/{{ ve.event_pic }}" alt="{{ ve.event_name }}" class="card-media-img">
+                            {% else %}
+                                <div class="w-100 h-100 d-flex align-items-center justify-content-center bg-light text-muted">
+                                    <i class="fas fa-calendar-alt fa-3x"></i>
+                                </div>
+                            {% endif %}
+                            <div class="card-media-badge">
+                                <span class="badge-modern badge-emerald">
+                                    <i class="fas fa-clock mr-1"></i> {{ ve.event_time|default:"Upcoming" }}
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="p-4 d-flex flex-column flex-grow-1">
+                            <div class="d-flex align-items-center gap-2 text-muted small mb-2">
+                                <span><i class="fas fa-calendar-day text-primary"></i> {{ ve.event_date }}</span>
+                                <span>&bull;</span>
+                                <span><i class="fas fa-map-marker-alt text-danger"></i> {{ ve.event_location }}</span>
+                            </div>
+
+                            <h4 class="font-weight-bold mb-2">
+                                <a href="/eventsingle/{{ ve.id }}" class="text-dark">{{ ve.event_name }}</a>
+                            </h4>
+                            
+                            <p class="text-muted small flex-grow-1" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+                                {{ ve.event_desc }}
+                            </p>
+
+                            <div class="d-flex align-items-center justify-content-between pt-3 border-top mt-3">
+                                <span class="badge-modern badge-amber">
+                                    <i class="fas fa-users mr-1"></i> {{ ve.volunteer }} Volunteers Needed
+                                </span>
+                                <a href="/eventsingle/{{ ve.id }}" class="btn-modern btn-modern-primary btn-modern-sm">
+                                    Details <i class="fas fa-chevron-right ml-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+            {% else %}
+                <div class="col-12">
+                    <div class="p-5 text-center bg-light rounded-xl">
+                        <i class="fas fa-calendar-times fa-3x text-muted mb-3"></i>
+                        <h5>No upcoming events at this moment</h5>
+                        <p class="text-muted">Check back shortly or register your NGO to organize a new charity drive.</p>
+                        <a href="/addevent" class="btn-modern btn-modern-primary btn-modern-sm">Organize Event</a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<!-- Trust & Mission Statement Banner -->
+<section class="py-5">
+    <div class="container">
+        <div class="trust-pledge-banner p-4 p-lg-5">
+            <div class="row align-items-center gy-4">
+                <div class="col-lg-7">
+                    <span class="badge-modern badge-emerald mb-3">
+                        <i class="fas fa-certificate mr-1"></i> Verified & Audited Process
+                    </span>
+                    <h2 class="text-white font-weight-bold mb-3" style="font-size: clamp(1.75rem, 3vw, 2.5rem);">
+                        Together, Every Act of Kindness Resonates Across the World
+                    </h2>
+                    <p class="text-slate-300 mb-4" style="font-size: 1.05rem;">
+                        From immediate disaster relief to long-term child education and daily food distribution, HopeBridge empowers you to give with total transparency and zero intermediaries.
+                    </p>
+                    <div class="d-flex flex-wrap gap-3">
+                        <a href="/signup" class="btn-modern btn-modern-primary btn-modern-lg">
+                            <i class="fas fa-user-plus mr-2"></i> Join as Volunteer / Donor
+                        </a>
+                        <a href="/about" class="btn-modern btn-modern-outline-white btn-modern-lg">
+                            <i class="fas fa-info-circle mr-2"></i> Read Our Story
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-lg-5">
+                    <div class="trust-code-box p-4">
+                        <h4 class="text-white font-weight-bold mb-3">
+                            <i class="fas fa-shield-alt text-success mr-2"></i> HopeBridge Trust Code
+                        </h4>
+                        <div class="d-flex flex-column gap-3" style="font-size: 0.925rem;">
+                            <div class="d-flex align-items-start">
+                                <i class="fas fa-check-circle text-success mt-1 mr-2" style="font-size: 1.1rem; flex-shrink: 0;"></i>
+                                <div><strong class="text-white">Rigorous NGO Verification:</strong> Every charity is vetted for registration and direct field presence.</div>
+                            </div>
+                            <div class="d-flex align-items-start">
+                                <i class="fas fa-check-circle text-success mt-1 mr-2" style="font-size: 1.1rem; flex-shrink: 0;"></i>
+                                <div><strong class="text-white">Real-time Food Expiry Tracking:</strong> Prioritizing food rescue safety and prompt delivery.</div>
+                            </div>
+                            <div class="d-flex align-items-start">
+                                <i class="fas fa-check-circle text-success mt-1 mr-2" style="font-size: 1.1rem; flex-shrink: 0;"></i>
+                                <div><strong class="text-white">Dedicated Volunteer Coordination:</strong> On-ground organizers to maximize every volunteer's impact.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

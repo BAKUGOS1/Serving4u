@@ -1,0 +1,124 @@
+{% extends 'basic.html' %}
+{% load static %}
+{% block title %}Verified NGOs - HopeBridge Partner Directory{% endblock %}
+
+{% block body %}
+<!-- Inner Hero Banner -->
+<section class="py-5" style="background: var(--grad-hero); color: white; position: relative; overflow: hidden;">
+    <div class="hero-backdrop-pattern"></div>
+    <div class="container position-relative py-4" style="z-index: 2;">
+        <div class="text-center max-w-2xl mx-auto" style="max-width: 700px; margin: 0 auto;">
+            <span class="hero-pill-badge mb-3"><i class="fas fa-shield-check text-success"></i> Vetted & Certified</span>
+            <h1 class="text-white font-weight-bold display-4 mb-3" style="font-size: clamp(2.2rem, 4vw, 3.2rem);">
+                Partner <span>NGO Directory</span>
+            </h1>
+            <p class="text-slate-200 lead mb-0" style="color: var(--slate-200); font-size: 1.15rem;">
+                Explore verified non-profit organizations operating in education, hunger relief, medical outreach, and community shelter.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Search & NGO Cards Grid -->
+<section class="py-5 bg-light">
+    <div class="container py-3">
+        <!-- Search & Filter Bar -->
+        <div class="glass-card p-3 mb-5" style="max-width: 700px; margin: 0 auto;">
+            <div class="input-icon-group">
+                <i class="fas fa-search input-icon"></i>
+                <input type="text" id="ngoSearchInput" class="form-control-modern" placeholder="Search NGO by name, cause, or location...">
+            </div>
+        </div>
+
+        <div class="row g-4" id="ngoListGrid">
+            {% if allngodata %}
+                {% for an in allngodata %}
+                <div class="col-lg-4 col-md-6 ngo-card-item">
+                    <div class="modern-card h-100 p-0">
+                        <div class="card-media-wrapper" style="padding-top: 50%;">
+                            {% if an.display_pic %}
+                                <img src="/media/{{ an.display_pic }}" alt="{{ an.login_id.name }}" class="card-media-img">
+                            {% else %}
+                                <div class="w-100 h-100 d-flex align-items-center justify-content-center bg-light text-muted">
+                                    <i class="fas fa-building fa-3x"></i>
+                                </div>
+                            {% endif %}
+                            <div class="card-media-badge">
+                                <span class="badge-modern badge-emerald">
+                                    <i class="fas fa-check-circle mr-1"></i> Verified NGO
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="p-4 d-flex flex-column flex-grow-1">
+                            <h4 class="font-weight-bold text-dark mb-1 ngo-name">
+                                <a href="/viewngo/{{ an.id }}" class="text-dark">{{ an.login_id.name }}</a>
+                            </h4>
+                            
+                            <div class="d-flex align-items-center gap-2 text-muted small mb-3">
+                                <i class="fas fa-map-marker-alt text-danger"></i> <span class="ngo-address">{{ an.address|default:"Location on file" }}</span>
+                            </div>
+
+                            <p class="text-muted small flex-grow-1 ngo-desc" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">
+                                {{ an.ngo_desc|default:"Dedicated to empowering vulnerable populations through community programs and direct relief aid." }}
+                            </p>
+
+                            <div class="d-flex flex-column gap-2 pt-3 border-top mt-3" style="font-size: 0.875rem;">
+                                {% if an.ngo_helpline %}
+                                <div class="text-muted small">
+                                    <i class="fas fa-phone-alt text-success mr-2"></i> {{ an.ngo_helpline }}
+                                </div>
+                                {% endif %}
+                                {% if an.website %}
+                                <div class="text-muted small">
+                                    <i class="fas fa-globe text-primary mr-2"></i> <a href="{{ an.website }}" target="_blank" rel="noopener noreferrer">{{ an.website }}</a>
+                                </div>
+                                {% endif %}
+                            </div>
+
+                            <div class="d-flex gap-2 mt-4 pt-2">
+                                <a href="/viewngo/{{ an.id }}" class="btn-modern btn-modern-primary btn-modern-sm flex-grow-1">
+                                    <i class="fas fa-id-card mr-1"></i> Profile
+                                </a>
+                                <a href="/viewevents/{{ an.login_id.id }}" class="btn-modern btn-modern-outline btn-modern-sm flex-grow-1">
+                                    <i class="fas fa-calendar-alt mr-1"></i> Drives
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="col-12 text-center py-5">
+                    <div class="p-5 bg-white rounded-2xl shadow-sm max-w-md mx-auto" style="max-width: 500px; margin: 0 auto;">
+                        <i class="fas fa-building text-muted fa-3x mb-3"></i>
+                        <h4 class="font-weight-bold text-dark">No NGOs Registered Yet</h4>
+                        <p class="text-muted">Register your non-profit organization to start connecting with donors and volunteers.</p>
+                        <a href="/signup" class="btn-modern btn-modern-primary btn-modern-sm mt-2">Register NGO</a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<script>
+    // Live client-side NGO filter
+    document.getElementById('ngoSearchInput').addEventListener('input', function(e) {
+        const query = e.target.value.toLowerCase().trim();
+        const cards = document.querySelectorAll('.ngo-card-item');
+        
+        cards.forEach(card => {
+            const name = card.querySelector('.ngo-name').innerText.toLowerCase();
+            const desc = card.querySelector('.ngo-desc').innerText.toLowerCase();
+            const address = card.querySelector('.ngo-address').innerText.toLowerCase();
+            
+            if (name.includes(query) || desc.includes(query) || address.includes(query)) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    });
+</script>
+{% endblock %}

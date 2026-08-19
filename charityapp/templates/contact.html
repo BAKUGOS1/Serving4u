@@ -1,0 +1,105 @@
+{% extends 'basic.html' %}
+{% load static %}
+{% block title %}Contact Us - HopeBridge Support & Inquiries{% endblock %}
+
+{% block body %}
+<!-- Inner Hero Banner -->
+<section class="py-5" style="background: var(--grad-hero); color: white; position: relative; overflow: hidden;">
+    <div class="hero-backdrop-pattern"></div>
+    <div class="container position-relative py-4" style="z-index: 2;">
+        <div class="text-center max-w-2xl mx-auto" style="max-width: 680px; margin: 0 auto;">
+            <span class="hero-pill-badge mb-3"><i class="fas fa-headset text-warning"></i> We Are Here to Help</span>
+            <h1 class="text-white font-weight-bold display-4 mb-3" style="font-size: clamp(2.2rem, 4vw, 3.2rem);">
+                Get In Touch With <span>HopeBridge</span>
+            </h1>
+            <p class="text-slate-200 lead mb-0" style="color: var(--slate-200); font-size: 1.15rem;">
+                Have questions about donation drives, volunteer onboarding, or NGO registration? Our team is available 24/7.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Form & Info Grid -->
+<section class="py-5 bg-light">
+    <div class="container py-4">
+        <div class="row g-5">
+            <!-- Contact Form Card -->
+            <div class="col-lg-7">
+                <div class="form-modern-card h-100">
+                    <span class="section-eyebrow">Send a Message</span>
+                    <h3 class="font-weight-bold text-dark mb-4">Leave Us a Note</h3>
+                    
+                    <form action="/submitcontact" method="post" id="contactForm">
+                        {% csrf_token %}
+                        <div class="row g-3">
+                            <div class="col-md-6 form-group-modern">
+                                <label class="form-label-modern" for="name">Your Full Name <span class="text-danger">*</span></label>
+                                <div class="input-icon-group">
+                                    <i class="fas fa-user input-icon"></i>
+                                    <input type="text" class="form-control-modern" name="name" id="name" placeholder="John Doe" required>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 form-group-modern">
+                                <label class="form-label-modern" for="email">Email Address <span class="text-danger">*</span></label>
+                                <div class="input-icon-group">
+                                    <i class="fas fa-envelope input-icon"></i>
+                                    <input type="email" class="form-control-modern" name="email" id="email" placeholder="john@example.com" required>
+                                </div>
+                            </div>
+
+                            <div class="col-12 form-group-modern">
+                                <label class="form-label-modern" for="subject">Subject / Inquiry Type <span class="text-danger">*</span></label>
+                                <div class="input-icon-group">
+                                    <i class="fas fa-tag input-icon"></i>
+                                    <input type="text" class="form-control-modern" name="subject" id="subject" placeholder="e.g., Food Rescue Logistics Inquiry" required>
+                                </div>
+                            </div>
+
+                            <div class="col-12 form-group-modern">
+                                <label class="form-label-modern" for="message">Message Description <span class="text-danger">*</span></label>
+                                <textarea class="form-control-modern" name="message" id="message" rows="5" placeholder="How can we assist you or collaborate?" required></textarea>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn-modern btn-modern-primary btn-modern-lg mt-3 w-100">
+                            <i class="fas fa-paper-plane mr-2"></i> Submit Inquiry
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Direct Contact Info & FAQ -->
+            <div class="col-lg-5">
+                <div class="d-flex flex-column gap-4">
+                    <!-- Headquarters Card -->
+                    <div class="modern-card p-4">
+                        <h5 class="font-weight-bold text-dark mb-3"><i class="fas fa-map-marker-alt text-danger mr-2"></i> Headquarters</h5>
+                        <p class="text-muted mb-2">Ravi Complex, Nr. Palladium Mall, Thaltej, Ahmedabad, Gujarat, India</p>
+                        <div class="d-flex align-items-center gap-2 text-primary font-weight-bold small">
+                            <i class="fas fa-directions"></i> Open for scheduled drop-offs
+                        </div>
+                    </div>
+
+                    <!-- Helpline Card -->
+                    <div class="modern-card p-4" style="background: var(--primary-50); border-color: var(--primary-200);">
+                        <h5 class="font-weight-bold text-dark mb-2"><i class="fas fa-phone-volume text-success mr-2"></i> 24/7 Helpline</h5>
+                        <p class="text-muted small mb-3">For emergency food pickups or urgent disaster relief supplies coordination:</p>
+                        <div class="font-weight-bold text-dark" style="font-size: 1.35rem; font-family: var(--font-heading);">
+                            +91 7878787878
+                        </div>
+                        <div class="text-muted small mt-1">Toll-Free & WhatsApp Support Active</div>
+                    </div>
+
+                    <!-- Email Support -->
+                    <div class="modern-card p-4">
+                        <h5 class="font-weight-bold text-dark mb-2"><i class="fas fa-envelope-open-text text-primary mr-2"></i> Direct Email</h5>
+                        <p class="text-muted small mb-2">General Inquiries: <a href="mailto:connect@hopebridge.org" class="font-weight-bold text-primary">connect@hopebridge.org</a></p>
+                        <p class="text-muted small mb-0">NGO Partnerships: <a href="mailto:partners@hopebridge.org" class="font-weight-bold text-primary">partners@hopebridge.org</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,343 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>{% block title %}CharityConnect - Empowering Communities & Changing Lives{% endblock %}</title>
+    <meta name="description" content="A modern charity and volunteer platform connecting donors, volunteers, and verified NGOs for food, clothes, books, and financial support.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'assets/img/favicon.ico' %}">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Icons & Core Stylesheets -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/animate.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/magnific-popup.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/flaticon.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/modern_charity.css' %}">
+
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+
+    <!-- Header Navigation (Zybra Floating Pill Reference) -->
+    <header class="modern-header" id="mainHeader">
+        <div class="modern-nav-bar">
+            <!-- Brand Logo -->
+            <a href="/" class="brand-logo-wrapper">
+                <div class="brand-logo-icon">
+                    <i class="fas fa-hand-holding-heart"></i>
+                </div>
+                <div class="brand-logo-text">
+                    Hope<span>Bridge</span>
+                </div>
+            </a>
+
+            <!-- Desktop Centered Navigation -->
+            <nav class="desktop-nav-center d-none d-lg-block">
+                <ul class="modern-nav-links">
+                    <li><a href="/" class="modern-nav-link {% if request.path == '/' %}active{% endif %}">Home</a></li>
+                    <li><a href="/about" class="modern-nav-link {% if request.path == '/about' %}active{% endif %}">About</a></li>
+                    <li><a href="/allngo" class="modern-nav-link {% if '/ngo' in request.path or request.path == '/allngo' %}active{% endif %}">NGOs</a></li>
+                    <li><a href="/events" class="modern-nav-link {% if '/event' in request.path %}active{% endif %}">Social Events</a></li>
+
+                    {% if request.session.log_user %}
+                        {% if not ngo %}
+                        <!-- Donor / User Menu -->
+                        <li class="nav-dropdown">
+                            <span class="modern-nav-link nav-dropdown-toggle">
+                                <span>Donate & Volunteer</span>
+                                <svg class="nav-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none">
+                                    <path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </span>
+                            <div class="nav-dropdown-menu">
+                                <a href="/donatemoney" class="nav-dropdown-item"><i class="fas fa-coins"></i> Donate Money</a>
+                                <a href="/donatefood" class="nav-dropdown-item"><i class="fas fa-utensils"></i> Donate Food</a>
+                                <a href="/donateclothes" class="nav-dropdown-item"><i class="fas fa-tshirt"></i> Donate Clothes</a>
+                                <a href="/donatebooks" class="nav-dropdown-item"><i class="fas fa-book-open"></i> Donate Books</a>
+                                <div class="dropdown-divider-subtle"></div>
+                                <a href="/applyvolunteer" class="nav-dropdown-item"><i class="fas fa-hands-helping"></i> Apply as Volunteer</a>
+                                <a href="/viewmyapplications" class="nav-dropdown-item"><i class="fas fa-clipboard-check"></i> My Applications</a>
+                            </div>
+                        </li>
+                        {% else %}
+                        <!-- NGO Management Menu -->
+                        <li class="nav-dropdown">
+                            <span class="modern-nav-link nav-dropdown-toggle">
+                                <span>Manage Drives</span>
+                                <svg class="nav-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none">
+                                    <path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </span>
+                            <div class="nav-dropdown-menu">
+                                <a href="/addevent" class="nav-dropdown-item"><i class="fas fa-calendar-plus"></i> Create Event</a>
+                                <a href="/manageevent" class="nav-dropdown-item"><i class="fas fa-tasks"></i> Manage Events</a>
+                                <a href="/reqcan" class="nav-dropdown-item"><i class="fas fa-user-plus"></i> Request Volunteer</a>
+                                <a href="/viewcan" class="nav-dropdown-item"><i class="fas fa-user-check"></i> Review Candidates</a>
+                            </div>
+                        </li>
+
+                        <!-- NGO Donations Ledger -->
+                        <li class="nav-dropdown">
+                            <span class="modern-nav-link nav-dropdown-toggle">
+                                <span>Donations</span>
+                                <svg class="nav-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none">
+                                    <path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </span>
+                            <div class="nav-dropdown-menu">
+                                <a href="/receivedmoney" class="nav-dropdown-item"><i class="fas fa-wallet"></i> Funds Received</a>
+                                <a href="/receivedfood" class="nav-dropdown-item"><i class="fas fa-bread-slice"></i> Food Received</a>
+                                <a href="/receivedclothes" class="nav-dropdown-item"><i class="fas fa-tshirt"></i> Clothes Received</a>
+                                <a href="/receivedbooks" class="nav-dropdown-item"><i class="fas fa-books"></i> Books Received</a>
+                            </div>
+                        </li>
+                        {% endif %}
+                    {% endif %}
+
+                    <li><a href="/contact" class="modern-nav-link {% if request.path == '/contact' %}active{% endif %}">Contact</a></li>
+                </ul>
+            </nav>
+
+            <!-- Auth Actions & Profile -->
+            <div class="nav-auth-actions">
+                {% if request.session.log_user %}
+                    <div class="d-flex align-items-center gap-2">
+                        {% if not ngo %}
+                            <a href="/profile" class="user-badge-pill" title="My Donor Profile">
+                                <div class="user-badge-avatar">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <span class="user-badge-name d-none d-sm-inline">{{ request.session.log_user }}</span>
+                                <span class="role-tag-badge role-tag-user">Donor</span>
+                            </a>
+                        {% else %}
+                            {% if profiledata.website == None or profiledata == None %}
+                                <a href="/completeprofile" class="btn-nav-action btn-nav-primary">
+                                    <i class="fas fa-magic mr-1"></i> Complete Profile
+                                </a>
+                            {% else %}
+                                <a href="/ngoprofile" class="user-badge-pill" title="NGO Dashboard">
+                                    <div class="user-badge-avatar" style="background: var(--grad-accent);">
+                                        <i class="fas fa-building"></i>
+                                    </div>
+                                    <span class="user-badge-name d-none d-sm-inline">{{ request.session.log_user }}</span>
+                                    <span class="role-tag-badge role-tag-ngo">NGO</span>
+                                </a>
+                            {% endif %}
+                        {% endif %}
+                        <a href="/logout" class="btn-nav-action btn-nav-ghost nav-logout-btn" title="Log Out">
+                            <i class="fas fa-sign-out-alt mr-1"></i> <span class="d-none d-md-inline">Logout</span>
+                        </a>
+                    </div>
+                {% else %}
+                    <div class="d-flex align-items-center gap-2">
+                        <a href="/login" class="btn-nav-action btn-nav-ghost">
+                            Login
+                        </a>
+                        <a href="/signup" class="btn-nav-action btn-nav-primary">
+                            Join Us
+                        </a>
+                    </div>
+                {% endif %}
+
+                <!-- Mobile Menu Button -->
+                <button class="nav-mobile-toggle d-lg-none" id="mobileMenuToggle" aria-label="Toggle menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Floating Drawer Menu -->
+        <div id="mobileDrawer" class="mobile-nav-drawer d-lg-none">
+            <div class="d-flex flex-column gap-2">
+                <a href="/" class="modern-nav-link font-weight-bold"><i class="fas fa-home mr-2 text-success"></i> Home</a>
+                <a href="/about" class="modern-nav-link font-weight-bold"><i class="fas fa-info-circle mr-2 text-success"></i> About Us</a>
+                <a href="/allngo" class="modern-nav-link font-weight-bold"><i class="fas fa-globe mr-2 text-success"></i> Verified NGOs</a>
+                <a href="/events" class="modern-nav-link font-weight-bold"><i class="fas fa-calendar-alt mr-2 text-success"></i> Social Events</a>
+
+                {% if request.session.log_user %}
+                    <div class="dropdown-divider-subtle"></div>
+                    <div class="text-muted small font-weight-bold text-uppercase px-2">Account Portal</div>
+                    {% if not ngo %}
+                        <a href="/donatemoney" class="modern-nav-link"><i class="fas fa-coins mr-2 text-success"></i> Donate Money</a>
+                        <a href="/donatefood" class="modern-nav-link"><i class="fas fa-utensils mr-2 text-success"></i> Donate Food</a>
+                        <a href="/donateclothes" class="modern-nav-link"><i class="fas fa-tshirt mr-2 text-success"></i> Donate Clothes</a>
+                        <a href="/donatebooks" class="modern-nav-link"><i class="fas fa-book mr-2 text-success"></i> Donate Books</a>
+                        <a href="/applyvolunteer" class="modern-nav-link"><i class="fas fa-hands-helping mr-2 text-success"></i> Volunteer in Drives</a>
+                        <a href="/viewmyapplications" class="modern-nav-link"><i class="fas fa-list-check mr-2 text-success"></i> My Applications</a>
+                        <a href="/profile" class="modern-nav-link"><i class="fas fa-user-circle mr-2 text-success"></i> My Donor Profile</a>
+                    {% else %}
+                        <a href="/addevent" class="modern-nav-link"><i class="fas fa-plus-circle mr-2 text-success"></i> Create Event</a>
+                        <a href="/manageevent" class="modern-nav-link"><i class="fas fa-tasks mr-2 text-success"></i> Manage Events</a>
+                        <a href="/viewcan" class="modern-nav-link"><i class="fas fa-user-check mr-2 text-success"></i> Review Candidates</a>
+                        <a href="/receivedmoney" class="modern-nav-link"><i class="fas fa-wallet mr-2 text-success"></i> Received Donations</a>
+                        <a href="/ngoprofile" class="modern-nav-link"><i class="fas fa-building mr-2 text-success"></i> NGO Dashboard</a>
+                    {% endif %}
+                {% endif %}
+                <a href="/contact" class="modern-nav-link font-weight-bold"><i class="fas fa-envelope mr-2 text-success"></i> Contact Us</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Global Toast / Alerts -->
+    {% include 'messages.html' %}
+
+    <!-- Main Content Area -->
+    <main>
+        {% block body %}{% endblock %}
+    </main>
+
+    <!-- Modern Footer -->
+    <footer class="modern-footer">
+        <div class="container">
+            <div class="row gy-4">
+                <!-- Col 1: Brand & Mission -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="brand-logo-wrapper mb-3">
+                        <div class="brand-logo-icon">
+                            <i class="fas fa-hand-holding-heart"></i>
+                        </div>
+                        <div class="brand-logo-text text-white">
+                            Hope<span>Bridge</span>
+                        </div>
+                    </div>
+                    <p class="text-slate-400" style="font-size: 0.95rem; line-height: 1.6; color: var(--slate-400);">
+                        A trusted, high-impact non-profit ecosystem bridging donors, volunteers, and grassroots NGOs to eliminate hunger, foster education, and build resilient communities worldwide.
+                    </p>
+                    <div class="social-links-row mt-3">
+                        <a href="#" class="footer-social-btn" title="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="footer-social-btn" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="footer-social-btn" title="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="footer-social-btn" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+
+                <!-- Col 2: Quick Links -->
+                <div class="col-lg-2 col-md-6 col-6 mb-4">
+                    <h5 class="footer-heading">Explore</h5>
+                    <ul class="footer-links-list">
+                        <li><a href="/" class="footer-link">Home</a></li>
+                        <li><a href="/about" class="footer-link">About Mission</a></li>
+                        <li><a href="/allngo" class="footer-link">Verified NGOs</a></li>
+                        <li><a href="/events" class="footer-link">Social Events</a></li>
+                        <li><a href="/contact" class="footer-link">Contact & Help</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 3: Ways to Help -->
+                <div class="col-lg-3 col-md-6 col-6 mb-4">
+                    <h5 class="footer-heading">Give Support</h5>
+                    <ul class="footer-links-list">
+                        <li><a href="/donatemoney" class="footer-link">Donate Financial Aid</a></li>
+                        <li><a href="/donatefood" class="footer-link">Rescue & Donate Food</a></li>
+                        <li><a href="/donateclothes" class="footer-link">Donate Warm Clothes</a></li>
+                        <li><a href="/donatebooks" class="footer-link">Educational Books Drive</a></li>
+                        <li><a href="/applyvolunteer" class="footer-link">Volunteer in Events</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 4: Contact & Newsletter -->
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5 class="footer-heading">Emergency & Reach</h5>
+                    <div class="mb-3">
+                        <div class="footer-contact-item">
+                            <div class="footer-contact-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <span>Ravi Complex, Thaltej, Ahmedabad</span>
+                        </div>
+                        <div class="footer-contact-item">
+                            <div class="footer-contact-icon">
+                                <i class="fas fa-phone-alt"></i>
+                            </div>
+                            <span>+91 7878787878 (24/7 Support)</span>
+                        </div>
+                        <div class="footer-contact-item">
+                            <div class="footer-contact-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <span>support@hopebridge.org</span>
+                        </div>
+                    </div>
+                    <div class="badge-modern badge-emerald p-2" style="font-size: 0.75rem;">
+                        <i class="fas fa-shield-alt mr-1"></i> 100% Verified Non-Profit Network
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer Bottom -->
+            <div class="footer-divider"></div>
+            <div class="d-flex flex-column flex-md-row align-items-center justify-content-between text-slate-500" style="font-size: 0.85rem; color: var(--slate-500);">
+                <div>
+                    &copy; 2026 HopeBridge Charity Network. All Rights Reserved.
+                </div>
+                <div class="d-flex gap-3 mt-2 mt-md-0">
+                    <a href="/about" class="text-slate-500" style="color: var(--slate-400);">Privacy Policy</a>
+                    <span>&bull;</span>
+                    <a href="/about" class="text-slate-500" style="color: var(--slate-400);">Terms of Service</a>
+                    <span>&bull;</span>
+                    <a href="/contact" class="text-slate-500" style="color: var(--slate-400);">Transparency Report</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <a href="#" id="backToTop" class="btn-modern btn-modern-primary btn-modern-icon" style="position: fixed; bottom: 2rem; right: 2rem; z-index: 999; display: none;" title="Go to Top">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+
+    <!-- Core Scripts -->
+    <script src="{% static 'assets/js/vendor/jquery-1.12.4.min.js' %}"></script>
+    <script src="{% static 'assets/js/popper.min.js' %}"></script>
+    <script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+
+    <script>
+        // Zybra-style Header scroll dynamics & back to top
+        function updateHeaderScroll() {
+            var scrollY = $(window).scrollTop();
+            if (scrollY > 24) {
+                $('#mainHeader').addClass('scrolled');
+                $('#backToTop').fadeIn(200);
+            } else {
+                $('#mainHeader').removeClass('scrolled');
+                $('#backToTop').fadeOut(200);
+            }
+        }
+
+        $(window).on('scroll', updateHeaderScroll);
+        updateHeaderScroll();
+
+        $('#backToTop').on('click', function(e) {
+            e.preventDefault();
+            $('html, body').animate({ scrollTop: 0 }, 400);
+        });
+
+        // Mobile drawer toggle
+        $('#mobileMenuToggle').on('click', function(e) {
+            e.stopPropagation();
+            var isOpen = $('#mobileDrawer').is(':visible');
+            $('#mobileDrawer').slideToggle(200);
+            $(this).attr('aria-expanded', !isOpen);
+        });
+
+        // Close mobile drawer on outside click
+        $(document).on('click', function(e) {
+            if (!$(e.target).closest('#mainHeader').length) {
+                $('#mobileDrawer').slideUp(180);
+                $('#mobileMenuToggle').attr('aria-expanded', 'false');
+            }
+        });
+    </script>
+
+    {% block js %}{% endblock %}
+</body>
+</html>

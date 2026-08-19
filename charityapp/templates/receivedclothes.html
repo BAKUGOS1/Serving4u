@@ -1,0 +1,74 @@
+{% extends 'basic.html' %}
+{% load static %}
+{% block title %}Received Clothes Donations - HopeBridge NGO Ledger{% endblock %}
+
+{% block body %}
+<!-- Inner Hero Header -->
+<section class="py-5" style="background: var(--grad-hero); color: white; position: relative;">
+    <div class="hero-backdrop-pattern"></div>
+    <div class="container position-relative py-3" style="z-index: 2;">
+        <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
+            <div>
+                <span class="hero-pill-badge mb-2"><i class="fas fa-tshirt text-warning"></i> Clothing Drive Log</span>
+                <h1 class="text-white font-weight-bold display-5 mb-0" style="font-size: clamp(2rem, 3.5vw, 2.5rem);">
+                    Received Clothes Donations
+                </h1>
+            </div>
+            <a href="/ngoprofile" class="btn-modern btn-modern-outline-white">
+                <i class="fas fa-arrow-left mr-1"></i> Back to Dashboard
+            </a>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 bg-light">
+    <div class="container py-3">
+        <!-- Table -->
+        <div class="table-responsive-modern">
+            <table class="table-modern">
+                <thead>
+                    <tr>
+                        <th style="width: 70px;">#</th>
+                        <th>Target Age Group</th>
+                        <th>Pairs / Quantity</th>
+                        <th>Gender Category</th>
+                        <th>Donor Name</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if ngoclothes %}
+                        {% for rc in ngoclothes %}
+                        <tr>
+                            <td><span class="font-weight-bold text-muted">{{ forloop.counter }}</span></td>
+                            <td>
+                                <div class="font-weight-bold text-dark">{{ rc.age_group }}</div>
+                            </td>
+                            <td>
+                                <span class="badge-modern badge-blue font-weight-bold">{{ rc.pairs }}</span>
+                            </td>
+                            <td>
+                                <span class="badge-modern badge-slate">{{ rc.suitable_gender }}</span>
+                            </td>
+                            <td>
+                                <span class="font-weight-bold text-dark">{{ rc.l_id.name }}</span>
+                            </td>
+                            <td>
+                                <span class="badge-modern badge-emerald"><i class="fas fa-box-check mr-1"></i> Received</span>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="6" class="text-center py-5 text-muted">
+                                <i class="fas fa-tshirt fa-2x mb-2 d-block text-muted"></i>
+                                No clothing donations recorded yet.
+                            </td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+{% endblock %}

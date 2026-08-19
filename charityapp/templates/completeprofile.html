@@ -1,0 +1,80 @@
+{% extends 'basic.html' %}
+{% load static %}
+{% block title %}Complete NGO Profile - HopeBridge{% endblock %}
+
+{% block body %}
+<!-- Inner Hero Header -->
+<section class="py-5" style="background: var(--grad-hero); color: white; position: relative;">
+    <div class="hero-backdrop-pattern"></div>
+    <div class="container position-relative py-3" style="z-index: 2;">
+        <div class="text-center max-w-2xl mx-auto" style="max-width: 650px; margin: 0 auto;">
+            <span class="hero-pill-badge mb-2"><i class="fas fa-sparkles text-warning"></i> Onboarding Step</span>
+            <h1 class="text-white font-weight-bold display-5 mb-2" style="font-size: clamp(2rem, 3.5vw, 2.75rem);">
+                Complete NGO Profile
+            </h1>
+            <p class="text-slate-200 lead mb-0" style="font-size: 1.05rem;">
+                Provide your official helpline, address, website, and mission details to start listing charity drives.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 bg-light">
+    <div class="container py-3">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-md-10">
+                <div class="form-modern-card p-4 p-md-5">
+                    <form action="/completeprofilesubmit" method="post" id="completeProfileForm" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                        <div class="row g-3">
+                            <div class="col-md-6 form-group-modern">
+                                <label class="form-label-modern" for="website">Official Website URL <span class="text-danger">*</span></label>
+                                <div class="input-icon-group">
+                                    <i class="fas fa-globe input-icon"></i>
+                                    <input type="url" class="form-control-modern" name="website" id="website" placeholder="https://www.yourngo.org" required>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 form-group-modern">
+                                <label class="form-label-modern" for="ngophone">Public NGO Helpline Number <span class="text-danger">*</span></label>
+                                <div class="input-icon-group">
+                                    <i class="fas fa-phone-alt input-icon"></i>
+                                    <input type="tel" class="form-control-modern" name="ngophone" id="ngophone" placeholder="9876543210" required>
+                                </div>
+                            </div>
+
+                            <div class="col-12 form-group-modern">
+                                <label class="form-label-modern" for="address">Headquarters / Physical Address <span class="text-danger">*</span></label>
+                                <div class="input-icon-group">
+                                    <i class="fas fa-map-marker-alt input-icon"></i>
+                                    <input type="text" class="form-control-modern" name="address" id="address" placeholder="Street Address, City, State" required>
+                                </div>
+                            </div>
+
+                            <div class="col-12 form-group-modern">
+                                <label class="form-label-modern" for="description">Mission Description & Cause Focus <span class="text-danger">*</span></label>
+                                <textarea class="form-control-modern" name="description" id="description" rows="4" placeholder="Briefly describe your non-profit's mission, core beneficiaries, and past achievements..." required></textarea>
+                            </div>
+
+                            <div class="col-12 form-group-modern">
+                                <label class="form-label-modern" for="dp">NGO Logo / Banner Image <span class="text-danger">*</span></label>
+                                <div class="file-dropzone-modern">
+                                    <i class="fas fa-cloud-upload-alt dropzone-icon"></i>
+                                    <div class="font-weight-bold text-dark mb-1">Click to Upload Logo or Drag & Drop</div>
+                                    <div class="text-muted small">PNG, JPG, or WEBP up to 5MB</div>
+                                    <input type="file" class="dropzone-input" name="dp" id="dp" accept="image/*" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn-modern btn-modern-primary btn-modern-lg w-100 mt-4">
+                            <i class="fas fa-check-circle mr-2"></i> Save & Activate NGO Profile
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

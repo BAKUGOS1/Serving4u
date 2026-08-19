@@ -1,0 +1,88 @@
+{% extends 'basic.html' %}
+{% load static %}
+{% block title %}NGO Charity Drives & Events - HopeBridge{% endblock %}
+
+{% block body %}
+<!-- Inner Hero Header -->
+<section class="py-5" style="background: var(--grad-hero); color: white; position: relative;">
+    <div class="hero-backdrop-pattern"></div>
+    <div class="container position-relative py-3" style="z-index: 2;">
+        <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
+            <div>
+                <span class="hero-pill-badge mb-2"><i class="fas fa-calendar-alt text-warning"></i> Organization Drives</span>
+                <h1 class="text-white font-weight-bold display-5 mb-1" style="font-size: clamp(2rem, 3.5vw, 2.75rem);">
+                    NGO Social Events
+                </h1>
+                <p class="text-slate-300 small mb-0">Explore scheduled community programs and active volunteer recruitment drives.</p>
+            </div>
+            <a href="/allngo" class="btn-modern btn-modern-outline-white">
+                <i class="fas fa-arrow-left mr-1"></i> Back to NGO Directory
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Events List -->
+<section class="py-5 bg-light">
+    <div class="container py-3">
+        <div class="row g-4">
+            {% if myevents %}
+                {% for ve in myevents %}
+                <div class="col-lg-4 col-md-6">
+                    <div class="modern-card h-100 p-0">
+                        <div class="card-media-wrapper" style="padding-top: 55%;">
+                            {% if ve.event_pic %}
+                                <img src="/media/{{ ve.event_pic }}" alt="{{ ve.event_name }}" class="card-media-img">
+                            {% else %}
+                                <div class="w-100 h-100 d-flex align-items-center justify-content-center bg-light text-muted">
+                                    <i class="fas fa-calendar-alt fa-3x"></i>
+                                </div>
+                            {% endif %}
+                            <div class="card-media-badge">
+                                <span class="badge-modern badge-emerald">
+                                    <i class="fas fa-clock mr-1"></i> {{ ve.event_time|default:"Schedule on file" }}
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="p-4 d-flex flex-column flex-grow-1">
+                            <div class="d-flex align-items-center gap-2 text-muted small mb-2">
+                                <span><i class="fas fa-calendar-day text-primary"></i> {{ ve.event_date }}</span>
+                                <span>&bull;</span>
+                                <span><i class="fas fa-map-marker-alt text-danger"></i> {{ ve.event_location }}</span>
+                            </div>
+
+                            <h4 class="font-weight-bold text-dark mb-2">
+                                <a href="/eventsingle/{{ ve.id }}" class="text-dark">{{ ve.event_name }}</a>
+                            </h4>
+
+                            <p class="text-muted small flex-grow-1" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">
+                                {{ ve.event_desc }}
+                            </p>
+
+                            <div class="d-flex align-items-center justify-content-between pt-3 border-top mt-3">
+                                <span class="badge-modern badge-amber">
+                                    <i class="fas fa-users mr-1"></i> {{ ve.volunteer }} Volunteers Needed
+                                </span>
+                                <a href="/eventsingle/{{ ve.id }}" class="btn-modern btn-modern-primary btn-modern-sm">
+                                    View Event <i class="fas fa-chevron-right ml-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="col-12 text-center py-5">
+                    <div class="p-5 bg-white rounded-2xl shadow-sm max-w-md mx-auto" style="max-width: 500px; margin: 0 auto;">
+                        <i class="fas fa-calendar-times text-muted fa-3x mb-3"></i>
+                        <h4 class="font-weight-bold text-dark">No Active Events for this NGO</h4>
+                        <p class="text-muted">This organization currently has no scheduled social drives.</p>
+                        <a href="/allngo" class="btn-modern btn-modern-primary btn-modern-sm mt-2">Browse All NGOs</a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

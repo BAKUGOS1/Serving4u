@@ -1,0 +1,90 @@
+{% extends 'basic.html' %}
+{% load static %}
+{% block title %}My Volunteer Applications - HopeBridge{% endblock %}
+
+{% block body %}
+<!-- Inner Hero Header -->
+<section class="py-5" style="background: var(--grad-hero); color: white; position: relative;">
+    <div class="hero-backdrop-pattern"></div>
+    <div class="container position-relative py-3" style="z-index: 2;">
+        <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
+            <div>
+                <span class="hero-pill-badge mb-2"><i class="fas fa-clipboard-check text-warning"></i> Application Tracker</span>
+                <h1 class="text-white font-weight-bold display-5 mb-0" style="font-size: clamp(2rem, 3.5vw, 2.5rem);">
+                    My Volunteer Applications
+                </h1>
+            </div>
+            <a href="/events" class="btn-modern btn-modern-outline-white">
+                <i class="fas fa-search mr-1"></i> Explore More Drives
+            </a>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 bg-light">
+    <div class="container py-3">
+        <div class="row g-4">
+            {% if myappdata %}
+                {% for acd in myappdata %}
+                <div class="col-lg-6">
+                    <div class="modern-card p-4 h-100">
+                        <div class="d-flex gap-3 align-items-start">
+                            <div style="width: 72px; height: 72px; border-radius: var(--radius-xl); overflow: hidden; flex-shrink: 0; background: var(--slate-100);">
+                                {% if acd.event_id.event_pic %}
+                                    <img src="/media/{{ acd.event_id.event_pic }}" alt="{{ acd.event_id.event_name }}" style="width: 100%; height: 100%; object-fit: cover;">
+                                {% else %}
+                                    <div class="w-100 h-100 d-flex align-items-center justify-content-center text-muted">
+                                        <i class="fas fa-calendar-alt fa-2x"></i>
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <div class="flex-grow-1">
+                                <h5 class="font-weight-bold text-dark mb-1">
+                                    <a href="/eventsingle/{{ acd.event_id.id }}" class="text-dark">{{ acd.event_id.event_name }}</a>
+                                </h5>
+                                <div class="text-muted small mb-2">
+                                    <i class="fas fa-calendar-day mr-1 text-primary"></i> {{ acd.event_id.event_date }} &bull; 
+                                    <i class="fas fa-map-marker-alt mr-1 text-danger"></i> {{ acd.event_id.event_location }}
+                                </div>
+
+                                <div class="d-flex align-items-center justify-content-between pt-2 border-top mt-2">
+                                    <div>
+                                        {% if acd.status == "1" %}
+                                            <span class="badge-modern badge-emerald">
+                                                <i class="fas fa-check-circle mr-1"></i> Application Approved
+                                            </span>
+                                        {% elif acd.status == "2" %}
+                                            <span class="badge-modern badge-rose">
+                                                <i class="fas fa-times-circle mr-1"></i> Not Selected
+                                            </span>
+                                        {% else %}
+                                            <span class="badge-modern badge-amber">
+                                                <i class="fas fa-hourglass-half mr-1"></i> Under NGO Review
+                                            </span>
+                                        {% endif %}
+                                    </div>
+
+                                    <a href="/eventsingle/{{ acd.event_id.id }}" class="btn-modern btn-modern-outline btn-modern-sm">
+                                        Event Details <i class="fas fa-chevron-right ml-1"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="col-12 text-center py-5">
+                    <div class="p-5 bg-white rounded-2xl shadow-sm max-w-md mx-auto" style="max-width: 500px; margin: 0 auto;">
+                        <i class="fas fa-clipboard-list text-muted fa-3x mb-3"></i>
+                        <h4 class="font-weight-bold text-dark">No Applications Found</h4>
+                        <p class="text-muted">You haven't applied for any volunteer drives yet.</p>
+                        <a href="/events" class="btn-modern btn-modern-primary btn-modern-sm mt-2">Discover Events</a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

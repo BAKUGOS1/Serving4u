@@ -1,0 +1,116 @@
+{% extends 'basic.html' %}
+{% load static %}
+{% block title %}Social Events & Drives - HopeBridge{% endblock %}
+
+{% block body %}
+<!-- Inner Hero Banner -->
+<section class="py-5" style="background: var(--grad-hero); color: white; position: relative; overflow: hidden;">
+    <div class="hero-backdrop-pattern"></div>
+    <div class="container position-relative py-4" style="z-index: 2;">
+        <div class="text-center max-w-2xl mx-auto" style="max-width: 700px; margin: 0 auto;">
+            <span class="hero-pill-badge mb-3"><i class="fas fa-hands-helping text-warning"></i> On-Ground Action</span>
+            <h1 class="text-white font-weight-bold display-4 mb-3" style="font-size: clamp(2.2rem, 4vw, 3.2rem);">
+                Community <span>Drives & Events</span>
+            </h1>
+            <p class="text-slate-200 lead mb-0" style="color: var(--slate-200); font-size: 1.15rem;">
+                Join medical camps, food relief drives, clothing distributions, and book fairs organized by our verified NGOs.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Events Catalog -->
+<section class="py-5 bg-light">
+    <div class="container py-3">
+        <!-- Search & Filter -->
+        <div class="glass-card p-3 mb-5" style="max-width: 700px; margin: 0 auto;">
+            <div class="input-icon-group">
+                <i class="fas fa-search input-icon"></i>
+                <input type="text" id="eventSearchInput" class="form-control-modern" placeholder="Search events by title, NGO, location...">
+            </div>
+        </div>
+
+        <div class="row g-4" id="eventCardsGrid">
+            {% if allevents %}
+                {% for ve in allevents %}
+                <div class="col-lg-4 col-md-6 event-card-item">
+                    <div class="modern-card h-100 p-0">
+                        <div class="card-media-wrapper" style="padding-top: 55%;">
+                            {% if ve.event_pic %}
+                                <img src="/media/{{ ve.event_pic }}" alt="{{ ve.event_name }}" class="card-media-img">
+                            {% else %}
+                                <div class="w-100 h-100 d-flex align-items-center justify-content-center bg-light text-muted">
+                                    <i class="fas fa-calendar-alt fa-3x"></i>
+                                </div>
+                            {% endif %}
+                            <div class="card-media-badge">
+                                <span class="badge-modern badge-emerald">
+                                    <i class="fas fa-clock mr-1"></i> {{ ve.event_time|default:"Schedule on file" }}
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="p-4 d-flex flex-column flex-grow-1">
+                            <div class="d-flex align-items-center gap-2 text-muted small mb-2">
+                                <span><i class="fas fa-calendar-day text-primary"></i> {{ ve.event_date }}</span>
+                                <span>&bull;</span>
+                                <span class="event-location"><i class="fas fa-map-marker-alt text-danger"></i> {{ ve.event_location }}</span>
+                            </div>
+
+                            <h4 class="font-weight-bold text-dark mb-2 event-title">
+                                <a href="/eventsingle/{{ ve.id }}" class="text-dark">{{ ve.event_name }}</a>
+                            </h4>
+                            
+                            <div class="text-primary font-weight-bold small mb-2 event-ngo">
+                                <i class="fas fa-building mr-1"></i> Host: {{ ve.ngo_id.name }}
+                            </div>
+
+                            <p class="text-muted small flex-grow-1 event-desc" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">
+                                {{ ve.event_desc }}
+                            </p>
+
+                            <div class="d-flex align-items-center justify-content-between pt-3 border-top mt-3">
+                                <span class="badge-modern badge-amber">
+                                    <i class="fas fa-users mr-1"></i> {{ ve.volunteer }} Volunteers Needed
+                                </span>
+                                <a href="/eventsingle/{{ ve.id }}" class="btn-modern btn-modern-primary btn-modern-sm">
+                                    View Event <i class="fas fa-chevron-right ml-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="col-12 text-center py-5">
+                    <div class="p-5 bg-white rounded-2xl shadow-sm max-w-md mx-auto" style="max-width: 500px; margin: 0 auto;">
+                        <i class="fas fa-calendar-times text-muted fa-3x mb-3"></i>
+                        <h4 class="font-weight-bold text-dark">No Events Scheduled</h4>
+                        <p class="text-muted">Stay tuned for new charity drives and social welfare events in your city.</p>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<script>
+    document.getElementById('eventSearchInput').addEventListener('input', function(e) {
+        const query = e.target.value.toLowerCase().trim();
+        const cards = document.querySelectorAll('.event-card-item');
+        
+        cards.forEach(card => {
+            const title = card.querySelector('.event-title').innerText.toLowerCase();
+            const desc = card.querySelector('.event-desc').innerText.toLowerCase();
+            const location = card.querySelector('.event-location').innerText.toLowerCase();
+            const ngo = card.querySelector('.event-ngo').innerText.toLowerCase();
+            
+            if (title.includes(query) || desc.includes(query) || location.includes(query) || ngo.includes(query)) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    });
+</script>
+{% endblock %}

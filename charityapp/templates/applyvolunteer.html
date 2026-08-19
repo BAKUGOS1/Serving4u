@@ -1,0 +1,62 @@
+{% extends 'basic.html' %}
+{% load static %}
+{% block title %}Apply as Volunteer - HopeBridge Community Action{% endblock %}
+
+{% block body %}
+<!-- Inner Hero Header -->
+<section class="py-5" style="background: var(--grad-hero); color: white; position: relative;">
+    <div class="hero-backdrop-pattern"></div>
+    <div class="container position-relative py-3" style="z-index: 2;">
+        <div class="text-center max-w-2xl mx-auto" style="max-width: 680px; margin: 0 auto;">
+            <span class="hero-pill-badge mb-2"><i class="fas fa-hands-helping text-warning"></i> Community Service</span>
+            <h1 class="text-white font-weight-bold display-5 mb-2" style="font-size: clamp(2rem, 3.5vw, 2.75rem);">
+                Volunteer in a <span>Charity Drive</span>
+            </h1>
+            <p class="text-slate-200 lead mb-0" style="font-size: 1.05rem;">
+                Select an upcoming on-ground event and join fellow volunteers in packaging, distribution, and community support.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 bg-light">
+    <div class="container py-3">
+        <div class="row justify-content-center">
+            <div class="col-lg-7 col-md-9">
+                <div class="form-modern-card p-4 p-md-5">
+                    <form action="/applyforvol" method="post" id="applyVolunteerForm">
+                        {% csrf_token %}
+
+                        <div class="form-group-modern mb-4">
+                            <label class="form-label-modern" for="eventid">Choose Volunteer Event / Drive <span class="text-danger">*</span></label>
+                            <div class="input-icon-group">
+                                <i class="fas fa-calendar-alt input-icon"></i>
+                                <select class="form-select-modern" style="padding-left: 2.75rem;" id="eventid" name="eventid" required>
+                                    {% for ae in eventsdata %}
+                                        {% if ae.volunteer > 0 %}
+                                            <option value="{{ ae.id }}">{{ ae.event_name }} ({{ ae.event_date }} &bull; {{ ae.event_location }})</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="p-3 rounded-xl bg-light border mb-4">
+                            <div class="d-flex align-items-center gap-2 text-primary font-weight-bold small mb-1">
+                                <i class="fas fa-check-circle"></i> Volunteer Commitment:
+                            </div>
+                            <div class="text-muted small">
+                                Applying for this drive sends your verified contact details to the host NGO. Once accepted, you will receive venue orientation details.
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn-modern btn-modern-primary btn-modern-lg w-100">
+                            <i class="fas fa-paper-plane mr-2"></i> Submit Volunteer Application
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

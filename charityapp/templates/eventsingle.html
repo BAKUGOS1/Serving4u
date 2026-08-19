@@ -1,0 +1,153 @@
+{% extends 'basic.html' %}
+{% load static %}
+{% block title %}{{ eventdetail.event_name }} - Event Details | HopeBridge{% endblock %}
+
+{% block body %}
+<!-- Inner Hero Header -->
+<section class="py-5" style="background: var(--grad-hero); color: white; position: relative;">
+    <div class="hero-backdrop-pattern"></div>
+    <div class="container position-relative py-3" style="z-index: 2;">
+        <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
+            <div>
+                <span class="hero-pill-badge mb-2"><i class="fas fa-calendar-alt text-warning"></i> Community Charity Drive</span>
+                <h1 class="text-white font-weight-bold display-5 mb-1" style="font-size: clamp(2rem, 3.5vw, 2.75rem);">
+                    {{ eventdetail.event_name }}
+                </h1>
+                <div class="d-flex align-items-center gap-3 text-slate-300 small mt-2">
+                    <span><i class="fas fa-building text-primary"></i> Organized by <a href="/ngodet/{{ eventdetail.ngo_id.id }}" class="text-light font-weight-bold">{{ eventdetail.ngo_id.name }}</a></span>
+                    <span>&bull;</span>
+                    <span><i class="fas fa-map-marker-alt text-danger"></i> {{ eventdetail.event_location }}</span>
+                </div>
+            </div>
+
+            {% if eventdetail.volunteer > 0 %}
+            <a href="/beavol/{{ eventdetail.id }}" class="btn-modern btn-modern-accent btn-modern-lg">
+                <i class="fas fa-hands-helping mr-2"></i> Join as Volunteer
+            </a>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<!-- Event Details & Logistics -->
+<section class="py-5 bg-light">
+    <div class="container py-3">
+        <div class="row g-4">
+            <!-- Left Media & Logistics Sidebar -->
+            <div class="col-lg-5">
+                <div class="modern-card p-0 overflow-hidden mb-4">
+                    <div class="card-media-wrapper" style="padding-top: 65%;">
+                        {% if eventdetail.event_pic %}
+                            <img src="/media/{{ eventdetail.event_pic }}" alt="{{ eventdetail.event_name }}" class="card-media-img">
+                        {% else %}
+                            <div class="w-100 h-100 bg-light d-flex align-items-center justify-content-center text-muted">
+                                <i class="fas fa-calendar-alt fa-3x"></i>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="p-4">
+                        <h5 class="font-weight-bold text-dark mb-3">Event Schedule & Venue</h5>
+                        
+                        <div class="d-flex flex-column gap-3" style="font-size: 0.925rem;">
+                            <div class="d-flex align-items-center gap-3 p-2 rounded bg-light">
+                                <div class="stat-icon-wrapper" style="width: 40px; height: 40px; background: var(--primary-100); color: var(--primary-700); font-size: 1.1rem;">
+                                    <i class="fas fa-calendar-day"></i>
+                                </div>
+                                <div>
+                                    <div class="text-muted small">Date</div>
+                                    <div class="font-weight-bold text-dark">{{ eventdetail.event_date }}</div>
+                                </div>
+                            </div>
+
+                            <div class="d-flex align-items-center gap-3 p-2 rounded bg-light">
+                                <div class="stat-icon-wrapper" style="width: 40px; height: 40px; background: var(--accent-amber-light); color: var(--accent-amber); font-size: 1.1rem;">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div>
+                                    <div class="text-muted small">Reporting Time</div>
+                                    <div class="font-weight-bold text-dark">{{ eventdetail.event_time|default:"Schedule on file" }}</div>
+                                </div>
+                            </div>
+
+                            <div class="d-flex align-items-center gap-3 p-2 rounded bg-light">
+                                <div class="stat-icon-wrapper" style="width: 40px; height: 40px; background: var(--accent-rose-light); color: var(--accent-rose); font-size: 1.1rem;">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div>
+                                    <div class="text-muted small">Location Venue</div>
+                                    <div class="font-weight-bold text-dark">{{ eventdetail.event_location }}</div>
+                                </div>
+                            </div>
+
+                            <div class="d-flex align-items-center gap-3 p-2 rounded bg-light">
+                                <div class="stat-icon-wrapper" style="width: 40px; height: 40px; background: var(--accent-blue-light); color: var(--accent-blue); font-size: 1.1rem;">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <div>
+                                    <div class="text-muted small">Volunteer Capacity Required</div>
+                                    <div class="font-weight-bold text-dark">{{ eventdetail.volunteer }} Volunteers</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Host NGO Info -->
+                <div class="modern-card p-4">
+                    <div class="d-flex align-items-center gap-3 mb-3">
+                        <div class="user-badge-avatar" style="width: 48px; height: 48px; font-size: 1.25rem; background: var(--grad-primary);">
+                            <i class="fas fa-building text-white"></i>
+                        </div>
+                        <div>
+                            <div class="text-muted small">Organized By</div>
+                            <h5 class="font-weight-bold text-dark mb-0">{{ eventdetail.ngo_id.name }}</h5>
+                        </div>
+                    </div>
+                    <a href="/ngodet/{{ eventdetail.ngo_id.id }}" class="btn-modern btn-modern-outline btn-modern-sm w-100">
+                        View Organization Profile <i class="fas fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Right Description & Action Area -->
+            <div class="col-lg-7">
+                <div class="modern-card p-4 p-md-5 mb-4">
+                    <span class="section-eyebrow">Drive Details</span>
+                    <h3 class="font-weight-bold text-dark mb-4">About this Volunteer Initiative</h3>
+                    
+                    <div class="text-muted" style="font-size: 1.05rem; line-height: 1.8;">
+                        <p>{{ eventdetail.event_desc }}</p>
+                    </div>
+
+                    <div class="p-4 rounded-xl mt-4 bg-light border">
+                        <h5 class="font-weight-bold text-dark mb-2"><i class="fas fa-info-circle text-primary mr-2"></i> Volunteer Guidelines</h5>
+                        <ul class="text-muted small mb-0 pl-3">
+                            <li class="mb-1">Please arrive at the venue 15 minutes before the scheduled reporting time.</li>
+                            <li class="mb-1">Wear comfortable attire suitable for on-ground packaging and distribution activities.</li>
+                            <li>Carry a valid photo ID and confirmation of your registered volunteer status.</li>
+                        </ul>
+                    </div>
+
+                    <div class="mt-4 pt-3 border-top d-flex flex-column flex-sm-row gap-3 align-items-sm-center justify-content-between">
+                        <div>
+                            <span class="badge-modern badge-amber mb-1">
+                                <i class="fas fa-user-plus mr-1"></i> {{ eventdetail.volunteer }} Open Volunteer Spots
+                            </span>
+                            <div class="text-muted small">No prior experience required; on-site orientation provided.</div>
+                        </div>
+
+                        {% if eventdetail.volunteer > 0 %}
+                        <a href="/beavol/{{ eventdetail.id }}" class="btn-modern btn-modern-accent">
+                            <i class="fas fa-hands-helping mr-1"></i> Register as Volunteer
+                        </a>
+                        {% else %}
+                        <span class="badge-modern badge-slate">Volunteer Capacity Filled</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

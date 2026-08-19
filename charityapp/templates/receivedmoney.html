@@ -1,0 +1,86 @@
+{% extends 'basic.html' %}
+{% load static %}
+{% block title %}Received Financial Donations - HopeBridge NGO Ledger{% endblock %}
+
+{% block body %}
+<!-- Inner Hero Header -->
+<section class="py-5" style="background: var(--grad-hero); color: white; position: relative;">
+    <div class="hero-backdrop-pattern"></div>
+    <div class="container position-relative py-3" style="z-index: 2;">
+        <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
+            <div>
+                <span class="hero-pill-badge mb-2"><i class="fas fa-wallet text-warning"></i> NGO Financial Ledger</span>
+                <h1 class="text-white font-weight-bold display-5 mb-0" style="font-size: clamp(2rem, 3.5vw, 2.5rem);">
+                    Received Funds
+                </h1>
+            </div>
+            <a href="/ngoprofile" class="btn-modern btn-modern-outline-white">
+                <i class="fas fa-arrow-left mr-1"></i> Back to Dashboard
+            </a>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 bg-light">
+    <div class="container py-3">
+        <!-- Total Metric Card -->
+        <div class="row g-4 mb-4">
+            <div class="col-md-4">
+                <div class="stat-counter-card">
+                    <div class="stat-icon-wrapper" style="background: var(--primary-100); color: var(--primary-700);">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                    <div>
+                        <div class="stat-val">&#8377; {{ totaldonation.amount__sum|default:"0" }}</div>
+                        <div class="stat-title">Total Funds Raised</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Donations Table -->
+        <div class="table-responsive-modern">
+            <table class="table-modern">
+                <thead>
+                    <tr>
+                        <th style="width: 80px;">#</th>
+                        <th>Donor Name</th>
+                        <th>Contribution Amount</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if ngomoney %}
+                        {% for nm in ngomoney %}
+                        <tr>
+                            <td><span class="font-weight-bold text-muted">{{ forloop.counter }}</span></td>
+                            <td>
+                                <div class="d-flex align-items-center gap-2">
+                                    <div class="user-badge-avatar" style="width: 32px; height: 32px; font-size: 0.8rem;">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                    <span class="font-weight-bold text-dark">{{ nm.l_id.name }}</span>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="font-weight-bold text-success" style="font-size: 1.1rem;">&#8377; {{ nm.amount }}</span>
+                            </td>
+                            <td>
+                                <span class="badge-modern badge-emerald"><i class="fas fa-check-circle mr-1"></i> Verified & Credited</span>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="4" class="text-center py-5 text-muted">
+                                <i class="fas fa-receipt fa-2x mb-2 d-block text-muted"></i>
+                                No monetary donations recorded yet.
+                            </td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+{% endblock %}
