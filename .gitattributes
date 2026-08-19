@@ -1,9 +1,0 @@
-# Mark vendor static files and HTML templates so GitHub Linguist counts Python as the primary language
-charityapp/static/** linguist-vendored
-charityapp/templates/** linguist-detectable=false
-static/** linguist-vendored
-templates/** linguist-detectable=false
-*.css linguist-vendored
-*.js linguist-vendored
-*.scss linguist-vendored
-*.html linguist-detectable=false
