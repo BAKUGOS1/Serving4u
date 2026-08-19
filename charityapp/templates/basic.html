@@ -113,9 +113,13 @@
                         {% if not ngo %}
                             <a href="/profile" class="user-badge-pill" title="My Donor Profile">
                                 <div class="user-badge-avatar">
-                                    <i class="fas fa-user"></i>
+                                    {% if profiledata.display_pic %}
+                                        <img src="{{ profiledata.display_pic.url }}" alt="{{ user.name }}" class="user-badge-avatar-img">
+                                    {% else %}
+                                        <i class="fas fa-user"></i>
+                                    {% endif %}
                                 </div>
-                                <span class="user-badge-name d-none d-sm-inline">{{ request.session.log_user }}</span>
+                                <span class="user-badge-name d-none d-sm-inline">{{ user.name|default:request.session.log_user }}</span>
                                 <span class="role-tag-badge role-tag-user">Donor</span>
                             </a>
                         {% else %}
@@ -126,9 +130,13 @@
                             {% else %}
                                 <a href="/ngoprofile" class="user-badge-pill" title="NGO Dashboard">
                                     <div class="user-badge-avatar" style="background: var(--grad-accent);">
-                                        <i class="fas fa-building"></i>
+                                        {% if profiledata.display_pic %}
+                                            <img src="{{ profiledata.display_pic.url }}" alt="{{ user.name }}" class="user-badge-avatar-img">
+                                        {% else %}
+                                            <i class="fas fa-building"></i>
+                                        {% endif %}
                                     </div>
-                                    <span class="user-badge-name d-none d-sm-inline">{{ request.session.log_user }}</span>
+                                    <span class="user-badge-name d-none d-sm-inline">{{ user.name|default:request.session.log_user }}</span>
                                     <span class="role-tag-badge role-tag-ngo">NGO</span>
                                 </a>
                             {% endif %}

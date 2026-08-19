@@ -289,12 +289,13 @@ body {
 }
 
 .user-badge-name {
-  max-width: 140px;
+  max-width: 180px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   display: inline-block;
   vertical-align: middle;
+  font-weight: 600;
 }
 
 .nav-dropdown-menu {
@@ -438,6 +439,13 @@ body {
   justify-content: center;
   font-weight: 700;
   font-size: 0.85rem;
+  object-fit: cover;
+}
+
+.user-badge-avatar-img {
+  width: 100%;
+  height: 100%;
+  border-radius: var(--radius-full);
   object-fit: cover;
 }
 
